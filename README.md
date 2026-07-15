@@ -45,6 +45,10 @@ src/
 public/favicon.svg         # favicon (monogramme LK)
 ```
 
+## Documentation
+
+Pour la méthodologie, l'architecture et le workflow complet, voir [`docs/methodologie-et-workflow.md`](docs/methodologie-et-workflow.md).
+
 ## Polices
 
 Auto-hébergées via `@fontsource-variable` (Space Grotesk + Inter) — aucune requête vers un CDN externe.
