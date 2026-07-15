@@ -1,0 +1,35 @@
+---
+import { profile } from '../data/profile';
+
+const { social } = profile;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" id="contact">
+  <div class="wrap footer-inner">
+    <a class="brand" href="#top">
+      <span class="mark">{profile.initials}</span>
+      {profile.name}
+    </a>
+
+    <nav class="footer-links">
+      {social.email && <a class="footer-link" href={`mailto:${social.email}`}>Email</a>}
+      {
+        social.github && (
+          <a class="footer-link" href={social.github} target="_blank" rel="noopener">
+            GitHub
+          </a>
+        )
+      }
+      {
+        social.linkedin && (
+          <a class="footer-link" href={social.linkedin} target="_blank" rel="noopener">
+            LinkedIn
+          </a>
+        )
+      }
+    </nav>
+
+    <span class="footer-copy">© {year} {profile.name}</span>
+  </div>
+</footer>

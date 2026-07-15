@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hero — Portfolio (test)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#FBFAF8;
+      --surface:#FFFFFF;
+      --ink:#14131A;
+      --muted:#66646F;
+      --line:#ECEAE4;
+      --accent:#5B4BE6;
+      --accent-2:#9B5DE5;
+      --accent-soft:rgba(91,75,230,.10);
+      --grad:linear-gradient(135deg,#6D5EF6 0%,#A855F7 100%);
+      --font-display:'Space Grotesk',system-ui,-apple-system,Segoe UI,sans-serif;
+      --font-body:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+      --shadow:0 1px 2px rgba(20,19,26,.04),0 12px 32px -12px rgba(20,19,26,.14);
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{
+      font-family:var(--font-body);
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.5;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+    /* ---------- NAV ---------- */
+    header{position:relative;z-index:3}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+    .brand{display:flex;align-items:center;gap:11px;font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:-.01em}
+    .mark{width:34px;height:34px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:14px;font-weight:700;box-shadow:0 6px 16px -6px rgba(107,94,246,.7)}
+    .navlinks{display:flex;align-items:center;gap:34px}
+    .navlinks a{font-size:14.5px;font-weight:450;color:var(--muted);transition:color .18s}
+    .navlinks a:hover{color:var(--ink)}
+    .btn{
+      font-family:var(--font-body);font-size:14.5px;font-weight:550;cursor:pointer;
+      border-radius:11px;padding:11px 20px;border:1px solid transparent;transition:all .2s ease;
+      display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+    }
+    .btn-primary{background:var(--ink);color:#fff}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px -10px rgba(20,19,26,.55)}
+    .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+    .btn-ghost:hover{border-color:var(--ink);transform:translateY(-1px)}
+    .nav-cta{padding:10px 18px}
+
+    /* ---------- HERO ---------- */
+    .hero{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:70px 0 90px}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:500;color:#3f7a52;
+      background:#ecf7ef;border:1px solid #d6ecda;padding:7px 14px;border-radius:100px;margin-bottom:26px;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:#37b559;box-shadow:0 0 0 0 rgba(55,181,89,.6);animation:pulse 2.4s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(55,181,89,.55)}70%{box-shadow:0 0 0 8px rgba(55,181,89,0)}100%{box-shadow:0 0 0 0 rgba(55,181,89,0)}}
+
+    h1{
+      font-family:var(--font-display);font-weight:700;letter-spacing:-.035em;line-height:1.02;
+      font-size:clamp(44px,6.4vw,82px);margin-bottom:22px;
+    }
+    h1 .accent{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .role{font-size:20px;font-weight:550;color:var(--ink);margin-bottom:18px}
+    .lead{font-size:17.5px;line-height:1.62;color:var(--muted);max-width:52ch;margin-bottom:34px}
+    .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+    .cta-row .btn{padding:14px 24px;font-size:15.5px}
+    .arrow{transition:transform .2s}
+    .btn-primary:hover .arrow{transform:translateX(3px)}
+
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:9px 15px;border-radius:11px}
+    .chip svg{color:var(--accent)}
+
+    /* ---------- PORTRAIT ---------- */
+    .visual{position:relative;display:grid;place-items:center}
+    .portrait{
+      position:relative;width:min(360px,80%);aspect-ratio:4/5;border-radius:26px;
+      background:linear-gradient(160deg,#efe9ff 0%,#f7edff 55%,#fdeaf5 100%);
+      border:1px solid #eadfff;box-shadow:var(--shadow);display:grid;place-items:center;overflow:hidden;
+    }
+    .portrait .initials{font-family:var(--font-display);font-weight:700;font-size:96px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:.9}
+    .portrait .hint{position:absolute;bottom:16px;font-size:12.5px;color:#9a8fb8;letter-spacing:.02em}
+    .badge{
+      position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+      padding:12px 15px;box-shadow:var(--shadow);display:flex;align-items:center;gap:11px;font-size:13.5px;font-weight:500;
+    }
+    .badge .ic{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+    .badge small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+    .badge-1{top:6%;left:-6%;animation:float 5s ease-in-out infinite}
+    .badge-2{bottom:8%;right:-8%;animation:float 5s ease-in-out infinite .8s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+    /* ---------- BACKGROUND DECOR ---------- */
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;z-index:0;pointer-events:none}
+    .blob-1{width:520px;height:520px;background:radial-gradient(circle,#c9b8ff,transparent 68%);top:-160px;right:-120px;animation:drift 16s ease-in-out infinite}
+    .blob-2{width:420px;height:420px;background:radial-gradient(circle,#ffd6ef,transparent 68%);bottom:-200px;left:-140px;animation:drift 20s ease-in-out infinite reverse}
+    @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
+
+    /* ---------- ENTRANCE ---------- */
+    .fade{opacity:0;transform:translateY(16px);animation:up .7s cubic-bezier(.2,.7,.2,1) forwards}
+    .d1{animation-delay:.05s}.d2{animation-delay:.14s}.d3{animation-delay:.23s}.d4{animation-delay:.32s}.d5{animation-delay:.41s}.d6{animation-delay:.5s}
+    @keyframes up{to{opacity:1;transform:none}}
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr;gap:10px;padding:40px 0 70px;text-align:left}
+      .visual{order:-1;margin-bottom:10px}
+      .portrait{width:min(240px,64%)}
+      .navlinks{display:none}
+    }
+    @media (max-width:560px){
+      .wrap{padding:0 20px}
+      .badge-1{left:0}.badge-2{right:0}
+      .brand-name{display:none}
+      nav{padding:20px 0}
+      .nav-cta{padding:10px 16px}
+    }
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand fade d1" href="#"><span class="mark">LK</span> <span class="brand-name">Landry Kubwimana</span></a>
+        <div class="navlinks fade d2">
+          <a href="#projets">Projets</a>
+          <a href="#parcours">Parcours</a>
+          <a href="#tutorat">Tutorat</a>
+          <a href="#avis">Avis</a>
+        </div>
+        <a class="btn btn-primary nav-cta fade d2" href="#contact">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-text">
+        <span class="pill fade d1"><span class="dot"></span> Disponible pour du tutorat</span>
+        <h1 class="fade d2">Bonjour, moi c'est<br><span class="accent">Landry.</span></h1>
+        <p class="role fade d3">Développeur &amp; tuteur</p>
+        <p class="lead fade d3">Je transforme des idées en projets concrets — et j'accompagne les étudiants pour qu'ils progressent, un concept à la fois. Découvrez mon parcours, mes réalisations et réservez une séance.</p>
+        <div class="cta-row fade d4">
+          <a class="btn btn-primary" href="#projets">Voir mes projets <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#tutorat">Réserver du tutorat</a>
+        </div>
+        <div class="chips fade d5">
+          <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Parcours académique</span>
+          <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v14H2z"/><path d="M8 21h8M12 17v4"/></svg> Projets &amp; réalisations</span>
+          <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> Tutorat 1:1</span>
+        </div>
+      </div>
+
+      <div class="visual fade d4">
+        <div class="portrait">
+          <span class="initials">LK</span>
+          <span class="hint">Ta photo ici</span>
+        </div>
+        <div class="badge badge-1">
+          <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+          <div><strong>Projets</strong><small>Portfolio à jour</small></div>
+        </div>
+        <div class="badge badge-2">
+          <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <div><strong>Avis</strong><small>Laissés par les élèves</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

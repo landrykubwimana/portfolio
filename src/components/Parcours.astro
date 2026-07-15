@@ -1,0 +1,52 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section class="section" id="parcours">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Mon parcours</span>
+      <h2 class="section-title">Expérience &amp; formation</h2>
+    </div>
+
+    <div class="parcours-grid">
+      <div>
+        <h3 class="col-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>
+          Expérience professionnelle
+        </h3>
+        <div class="timeline">
+          {
+            profile.experience.map((x) => (
+              <div class="tl-item">
+                <div class="tl-period">{x.period}</div>
+                <div class="tl-role">{x.role}</div>
+                <div class="tl-org">{x.org}</div>
+                <p class="tl-desc">{x.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div>
+        <h3 class="col-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>
+          Parcours académique
+        </h3>
+        <div class="timeline">
+          {
+            profile.education.map((e) => (
+              <div class="tl-item">
+                <div class="tl-period">{e.period}</div>
+                <div class="tl-role">{e.credential}</div>
+                <div class="tl-org">{e.school}</div>
+                {e.description && <p class="tl-desc">{e.description}</p>}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
