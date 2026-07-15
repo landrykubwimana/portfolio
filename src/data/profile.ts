@@ -87,9 +87,8 @@ export const profile: Profile = {
   availableLabel: 'Disponible pour du tutorat',
 
   social: {
-    // TODO: ajoute tes liens (ils n'étaient pas dans le CV). Laisse '' pour masquer.
-    github: '',
-    linkedin: '',
+    github: 'https://github.com/landrykubwimana',
+    linkedin: 'https://www.linkedin.com/in/landry-kubwimana-8354b41a1/',
     // Email public affiché sur le site. (Tu peux mettre un email dédié pour limiter le spam.)
     email: 'landrykub@icloud.com',
   },
@@ -210,7 +209,7 @@ export const profile: Profile = {
     description:
       "L'agence de tutorat que je fonde et dirige. Aide aux devoirs, mise à niveau et préparation aux examens en mathématiques et en sciences — un accompagnement personnalisé, adapté au rythme de chaque élève.",
     subjects: ['Mathématiques', 'Sciences', 'Préparation aux examens', 'Soutien scolaire'],
-    // TODO: URL du futur site de tutorat Eurêka (Site B) — placeholder pour l'instant.
-    url: 'https://example.com',
+    // Site de tutorat Eurêka (Site B — à construire). Domaine déjà réservé.
+    url: 'https://aeeureka.com',
   },
 };
