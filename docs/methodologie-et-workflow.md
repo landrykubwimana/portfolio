@@ -1,19 +1,12 @@
 # Méthodologie & Workflow
 
-Ce document explique **comment ce projet a été pensé et construit**, et **comment travailler au quotidien** dessus. Il sert de référence pour comprendre les choix techniques et le cycle de développement.
+Ce document explique **comment ce portfolio a été pensé et construit**, et **comment travailler au quotidien** dessus. Il sert de référence pour comprendre les choix techniques et le cycle de développement.
 
 ---
 
-## 1. Vue d'ensemble
+## 1. Objectif
 
-L'objectif est de bâtir la **présence web professionnelle de Landry Kubwimana**, découpée en **deux sites distincts** :
-
-| Site | Rôle | Nature | Statut |
-|------|------|--------|--------|
-| **Site A — Portfolio** *(ce dépôt)* | Vitrine : parcours, projets, compétences, tutorat | Site **statique** | ✅ En ligne |
-| **Site B — Tutorat** *(Académie d'Excellence Eurêka)* | Réservations, comptes, suivi des élèves | **Application** (backend + comptes) | 🔜 À venir |
-
-**Pourquoi deux sites séparés ?** Ce sont deux natures très différentes : une vitrine quasi-statique et à faible maintenance, versus une application avec état, comptes utilisateurs et données sensibles. Les séparer permet à chacun d'évoluer indépendamment, isole les données privées, et garde le portfolio simple et robuste.
+Un **site portfolio personnel** : parcours académique et professionnel, projets et compétences. Objectifs de conception : un site **rapide, possédé, à faible maintenance**, et **déployé en continu**.
 
 ---
 
@@ -21,21 +14,17 @@ L'objectif est de bâtir la **présence web professionnelle de Landry Kubwimana*
 
 Les principes qui ont guidé la conception :
 
-1. **Décision avant construction.** Avant d'écrire du code, on a comparé les approches possibles (outil no-code type *Webflow* vs **code auto-hébergé** avec *Astro*). Critères décisifs : contrôle et possession des données, coût récurrent, capacité d'automatisation, et besoin d'une vraie base de données pour le Site B. → Choix du **code**.
+1. **Décision avant construction.** Avant d'écrire du code, on a comparé les approches possibles : un outil **no-code** (type *Webflow*) versus du **code auto-hébergé** avec *Astro*. Critères décisifs : contrôle et possession du contenu, coût récurrent, performance, et le fait que le site lui-même serve de démonstration technique. → Choix du **code**.
 
 2. **Design d'abord.** On a validé une **direction visuelle** (la section « hero ») avant de bâtir tout le site, pour ne pas construire sur une base incertaine.
 
-3. **Le contenu est une donnée, pas du HTML.** Tout le contenu du portfolio vit dans **un seul fichier typé** ([`src/data/profile.ts`](../src/data/profile.ts)). Les composants ne font que *l'afficher*. Cette structure est **volontairement pensée comme un futur schéma de base de données** : le jour où le portfolio deviendrait multi-utilisateur, chaque champ devient une colonne.
+3. **Le contenu est une donnée, pas du HTML.** Tout le contenu vit dans **un seul fichier typé** ([`src/data/profile.ts`](../src/data/profile.ts)). Les composants ne font que *l'afficher*. Modifier le site = éditer ce fichier, jamais le HTML.
 
 4. **Itératif et vérifié.** On construit section par section, on vérifie le rendu au fur et à mesure, et on déploie tôt.
-
-5. **Confidentialité par conception.** Les données sensibles (notamment celles d'élèves mineurs, côté Site B) ne vont **jamais** dans Git ni dans un site public — uniquement dans une base sécurisée avec contrôle d'accès. *(Voir la feuille de route, Phase 2.)*
 
 ---
 
 ## 3. Stack technique
-
-**Site A — Portfolio (actuel)**
 
 | Brique | Choix | Pourquoi |
 |--------|-------|----------|
@@ -43,14 +32,12 @@ Les principes qui ont guidé la conception :
 | Langage | **TypeScript** | Contenu structuré et typé |
 | Styles | **CSS** avec *design tokens* | Système de design cohérent, sans dépendance lourde |
 | Polices | **@fontsource** (Space Grotesk + Inter) | **Auto-hébergées** — aucune requête vers un CDN externe |
-| Versioning | **Git + GitHub** | Historique, sauvegarde, collaboration |
+| Versioning | **Git + GitHub** | Historique, sauvegarde |
 | Hébergement | **Vercel** | Build + mise en ligne automatiques à chaque push |
-
-**Site B — Tutorat (prévu)** — pressenti : Astro (SSR) ou Next.js/SvelteKit, avec **Supabase** (Auth, base Postgres, Row-Level Security, Storage) pour les comptes et les données. Détails à la Phase 2.
 
 ---
 
-## 4. Architecture du portfolio (Site A)
+## 4. Architecture
 
 ```
 src/
@@ -63,7 +50,7 @@ src/
 │   ├── Projects.astro
 │   ├── Skills.astro
 │   ├── Parcours.astro     # expérience + formation
-│   ├── Tutoring.astro     # section + lien vers le Site B
+│   ├── Tutoring.astro     # section « services » / appel à l'action
 │   └── Footer.astro
 └── pages/index.astro      # assemble les sections
 public/favicon.svg
@@ -90,7 +77,7 @@ flowchart TD
     L --> OUT["Site statique (dist/)"]
 ```
 
-**Conséquence pratique :** pour changer un texte, un projet, une compétence, on édite **uniquement `profile.ts`**. On ne touche jamais au HTML pour du contenu.
+**Conséquence pratique :** pour changer un texte, un projet, une compétence, on édite **uniquement `profile.ts`**.
 
 ---
 
@@ -138,10 +125,11 @@ flowchart LR
 
 ---
 
-## 7. Feuille de route
+## 7. Améliorations possibles
 
-- **Phase 1 — Portfolio** ✅ *Fait et déployé.* Site Astro complet, contenu réel, en ligne avec déploiement automatique.
-- **Phase 2 — Plateforme de tutorat (Eurêka)** 🔜 Application avec comptes (admin / tuteur / parent), suivi des demandes et assignation aux tuteurs, bibliothèque de documents, saisie des examens et devoirs, réservations, avis. Base **Supabase** (Auth + Row-Level Security + Postgres + Storage). Enjeu central : **sécurité et confidentialité** des données d'élèves mineurs.
+- Ajouter une **photo de profil** (remplace le placeholder du hero).
+- Ajouter les **liens de dépôts** sur les cartes de projets.
+- Brancher un **domaine personnalisé**.
 
 ---
 
@@ -149,4 +137,4 @@ flowchart LR
 
 - **Contenu = données.** Pas de contenu en dur dans le HTML ; tout passe par `profile.ts`.
 - **Commits descriptifs.** Un message clair par changement.
-- **Rien de sensible dans Git.** Les secrets et les données personnelles ne sont jamais versionnés.
+- **Rien de sensible dans Git.** Les secrets ne sont jamais versionnés.

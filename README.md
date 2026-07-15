@@ -39,7 +39,7 @@ src/
 │   ├── Hero.astro
 │   ├── Projects.astro
 │   ├── Parcours.astro     # expérience + formation
-│   ├── Tutoring.astro     # section + lien vers le site de tutorat (Site B)
+│   ├── Tutoring.astro     # section « services » / appel à l'action
 │   └── Footer.astro
 └── pages/index.astro      # assemble les sections
 public/favicon.svg         # favicon (monogramme LK)
