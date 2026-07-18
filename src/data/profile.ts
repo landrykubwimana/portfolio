@@ -79,9 +79,9 @@ export interface Profile {
 export const profile: Profile = {
   name: 'Landry Kubwimana',
   initials: 'LK',
-  role: 'Scientifique de données & tuteur',
+  role: 'Scientifique de données, M.Sc. | Tuteur',
   tagline:
-    "Scientifique de données passionné de transmission : je transforme des données complexes en décisions claires — et j'aide les étudiants à progresser en maths et en sciences.",
+    "Titulaire d'une maîtrise en science des données et analytique d'affaires (HEC Montréal) et d'un baccalauréat en mathématiques, j'occupe actuellement un poste de scientifique de données au Centre de Recherche du CHUM (CRCHUM). Je combine une base quantitative solide à une véritable expérience en communication et en vulgarisation. Cette double force – technique et relationnelle – me permet de traduire des besoins d'affaires en analyses claires et utiles. En parallèle, je dirige une agence de tutorat où j'accompagne des étudiants en mathématiques et en sciences, ce qui entretient ma capacité à rendre accessibles des concepts complexes.",
   location: 'Montréal, QC',
   available: true,
   availableLabel: 'Disponible pour du tutorat',
