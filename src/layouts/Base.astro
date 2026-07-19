@@ -20,6 +20,18 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Pose le thème avant le premier rendu (évite tout flash de mauvais thème).
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -31,5 +43,19 @@ const {
   </head>
   <body>
     <slot />
+    <script is:inline>
+      // Bascule clair/sombre au clic + mémorisation du choix.
+      (function () {
+        var btn = document.querySelector('.theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+          var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+        });
+      })();
+    </script>
   </body>
 </html>
