@@ -744,6 +744,12 @@ ul {
   border: 1px solid rgba(255, 255, 255, 0.14);
   padding: 8px 14px;
   border-radius: 100px;
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+}
+.subject-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.16);
 }
 .tutoring-cta {
   display: flex;
@@ -819,6 +825,45 @@ ul {
     scroll-behavior: auto !important;
   }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   Cascade au défilement (scroll reveal)
+   Actif seulement avec JS (.js-anim) et hors prefers-reduced-motion.
+   ============================================================ */
+html.js-anim .section-head,
+html.js-anim .proj-card,
+html.js-anim .skill-group,
+html.js-anim .col-title,
+html.js-anim .tl-item,
+html.js-anim .tutoring {
+  opacity: 0;
+}
+html.js-anim .reveal-in {
+  opacity: 1;
+  /* backwards : masque pendant le délai puis LIBÈRE `transform` après l'animation,
+     pour ne pas écraser le soulèvement au survol (:hover) des cartes. */
+  animation: reveal-rise 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js-anim .section-head,
+  html.js-anim .proj-card,
+  html.js-anim .skill-group,
+  html.js-anim .col-title,
+  html.js-anim .tl-item,
+  html.js-anim .tutoring {
+    opacity: 1 !important;
+  }
 }
 
 /* ============================================================
