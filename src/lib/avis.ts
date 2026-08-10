@@ -68,11 +68,13 @@ export interface AvisAffiche {
   nom: string;
   /** « Parent / tuteur légal », « Élève », ou la précision libre. */
   lien: string;
-  /** « Primaire, secondaire, cégep » ou « Secondaire — 4e année ». */
+  /** « Primaire » ou « Primaire, secondaire, cégep ». */
   niveaux: string;
+  /** « 4e année ». Segment distinct des niveaux, comme sur aeeureka. */
+  niveauDetail: string;
   /** « Depuis 2025 », « 2023 », « 2017 – 2020 », ou '' si aucune année. */
   periode: string;
-  /** Noms des cours suivis, à défaut des matières. */
+  /** « Mathématiques — Mathématique CST », ou « Français » sans cours. */
   matieres: string[];
   /** Le texte affiché sur la carte. */
   commentaire: string;
@@ -198,7 +200,8 @@ export async function getAvis(): Promise<AvisAffiche[]> {
     id: String(a.id),
     nom: nomAffiche(a),
     lien: libelleLien(a),
-    niveaux: libelleNiveaux(listeDeTextes(a.niveaux), a.niveau_detail),
+    niveaux: libelleNiveaux(listeDeTextes(a.niveaux)),
+    niveauDetail: libelleNiveauDetail(a.niveau_detail),
     periode: libellePeriode(a.annee_debut, a.annee_fin),
     matieres: matieresDe(a, noms),
     commentaire: (a.commentaire ?? '').trim(),
@@ -253,16 +256,21 @@ async function nomsDesMatieres(sb: SupabaseClient, lignes: AvisRow[]): Promise<N
   return noms;
 }
 
-/** Le nom du cours quand il y en a un, sinon celui de la matière. Sans doublon. */
+/**
+ * « Mathématiques — Mathématique CST » quand un cours est précisé, sinon la
+ * matière seule. Sans doublon, et par ordre alphabétique — c'est ce que fait
+ * aeeureka, et les deux sites doivent lister dans le même ordre.
+ */
 function matieresDe(a: AvisRow, noms: NomsMatieres): string[] {
   const sortie: string[] = [];
   for (const lien of a.avis_matieres ?? []) {
-    const nom =
-      (lien.cours_id != null ? noms.cours.get(`${lien.matiere_id}::${lien.cours_id}`) : undefined) ??
-      (lien.matiere_id != null ? noms.matieres.get(String(lien.matiere_id)) : undefined);
-    if (nom && !sortie.includes(nom)) sortie.push(nom);
+    const matiere = lien.matiere_id != null ? noms.matieres.get(String(lien.matiere_id)) : undefined;
+    const cours =
+      lien.cours_id != null ? noms.cours.get(`${lien.matiere_id}::${lien.cours_id}`) : undefined;
+    const texte = matiere && cours ? `${matiere} — ${cours}` : (cours ?? matiere);
+    if (texte && !sortie.includes(texte)) sortie.push(texte);
   }
-  return sortie;
+  return sortie.sort((x, y) => x.localeCompare(y, 'fr'));
 }
 
 /* ============================================================
@@ -298,13 +306,22 @@ function libelleLien(a: AvisRow): string {
   return majuscule(lien);
 }
 
-/** `niveau_detail` n'existe que lorsqu'un seul niveau est renseigné. */
-function libelleNiveaux(niveaux: string[], detail: string | null): string {
+function libelleNiveaux(niveaux: string[]): string {
   if (niveaux.length === 0) return '';
-  let texte = niveaux.map((n) => NIVEAU_MOT[n] ?? n).join(', ');
-  const precision = (detail ?? '').trim();
-  if (niveaux.length === 1 && precision) texte += ` — ${precision}`;
-  return majuscule(texte);
+  return majuscule(niveaux.map((n) => NIVEAU_MOT[n] ?? n).join(', '));
+}
+
+/**
+ * `niveau_detail` n'existe que lorsqu'un seul niveau est renseigné, et la base
+ * n'y stocke que le rang (« 4 »). aeeureka l'affiche « 4e année » ; on fait
+ * pareil, dans un segment séparé des niveaux.
+ *
+ * Une valeur qui n'est pas un nombre est affichée telle quelle.
+ */
+function libelleNiveauDetail(detail: string | null): string {
+  const t = (detail ?? '').trim();
+  if (!t) return '';
+  return /^\d+$/.test(t) ? `${t}e année` : t;
 }
 
 function libellePeriode(debut: unknown, fin: unknown): string {

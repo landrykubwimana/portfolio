@@ -54,6 +54,7 @@ src/
 │   ├── Projects.astro
 │   ├── Skills.astro
 │   ├── Parcours.astro     # expérience + formation
+│   ├── Maxime.astro       # la citation avant le pied de page
 │   └── Footer.astro
 └── pages/index.astro      # assemble les sections
 scripts/verifier-avis.mjs  # diagnostic de la lecture des avis

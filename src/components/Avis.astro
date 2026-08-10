@@ -24,28 +24,26 @@ const VISIBLES = 3;
 
       <div class="avis-grid" data-avis-grille data-avis-visibles={VISIBLES}>
         {avis.map((a) => {
-          const details = [a.lien, a.niveaux, a.periode].filter(Boolean);
+          /* Même composition que sur aeeureka, pour que les deux cartes se lisent
+             pareil : lien · niveaux · précision · période. */
+          const details = [a.lien, a.niveaux, a.niveauDetail, a.periode].filter(Boolean);
           return (
             <article class="avis-card">
-              <p class="avis-quote">{a.commentaire}</p>
-
-              {a.texteComplet.length > 0 && (
-                <button class="avis-more" type="button" data-avis-open={a.id}>
-                  Lire la suite <span class="arrow">→</span>
-                </button>
-              )}
+              <p class="avis-quote">{`« ${a.commentaire} »`}</p>
 
               <footer class="avis-meta">
                 <span class="avis-nom">{a.nom}</span>
                 {details.length > 0 && <span class="avis-detail">{details.join(' · ')}</span>}
                 {a.matieres.length > 0 && (
-                  <span class="avis-matieres">
-                    {a.matieres.map((m) => (
-                      <span class="tag">{m}</span>
-                    ))}
-                  </span>
+                  <span class="avis-matieres">{a.matieres.join(', ')}</span>
                 )}
               </footer>
+
+              {a.texteComplet.length > 0 && (
+                <button class="avis-more" type="button" data-avis-open={a.id}>
+                  Lire la lettre complète <span class="arrow">→</span>
+                </button>
+              )}
 
               {a.texteComplet.length > 0 && (
                 <dialog class="avis-dialog" id={`avis-${a.id}`} aria-labelledby={`avis-${a.id}-nom`}>

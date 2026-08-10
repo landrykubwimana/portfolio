@@ -45,6 +45,7 @@ src/
 │   ├── Projects.astro
 │   ├── Skills.astro
 │   ├── Parcours.astro     # expérience + formation
+│   ├── Maxime.astro       # la citation avant le pied de page
 │   └── Footer.astro
 └── pages/index.astro      # assemble les sections
 scripts/verifier-avis.mjs  # diagnostic : ce que le site voit dans la base
@@ -82,6 +83,8 @@ npm run verifier-avis
 2. Les libellés des cartes (`LIEN_CARTE`) doivent rester identiques à ceux d'aeeureka. Si tu en changes un ici, change-le aussi là-bas.
 
 ## Documentation
+
+Points en attente et questions ouvertes : [`docs/audit.md`](docs/audit.md).
 
 Pour la méthodologie, l'architecture et le workflow complet, voir [`docs/methodologie-et-workflow.md`](docs/methodologie-et-workflow.md).
 

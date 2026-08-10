@@ -15,6 +15,9 @@
 
   --font-display: 'Space Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Registre classique : le grec en filigrane et la maxime. C'est la serif du
+     système — la même pile que sur aeeureka, et rien à télécharger. */
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
   --radius: 16px;
   --radius-lg: 24px;
@@ -59,8 +62,7 @@
 :root[data-theme='dark'] .portrait {
   border-color: var(--line);
 }
-:root[data-theme='dark'] .proj-card:hover,
-:root[data-theme='dark'] .avis-card:hover {
+:root[data-theme='dark'] .proj-card:hover {
   border-color: #3a3550;
 }
 :root[data-theme='dark'] .blob {
@@ -703,14 +705,36 @@ ul {
 .tutoring::after {
   content: '';
   position: absolute;
-  width: 380px;
-  height: 380px;
+  width: 420px;
+  height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(155, 93, 229, 0.55), transparent 65%);
-  top: -140px;
-  right: -80px;
-  filter: blur(30px);
+  /* Le flou est dessiné dans le dégradé lui-même, sans `filter: blur()` :
+     un élément filtré échappe au coin arrondi de son parent — le navigateur
+     le rogne en rectangle, ce qui faisait dépasser une pointe claire en haut
+     à droite de la bande. */
+  background: radial-gradient(
+    circle,
+    rgba(155, 93, 229, 0.34) 0%,
+    rgba(155, 93, 229, 0.2) 35%,
+    rgba(155, 93, 229, 0.07) 58%,
+    transparent 75%
+  );
+  /* Repoussé vers le coin et adouci : son centre tombait exactement là où se
+     pose maintenant le filigrane grec, qui s'y serait noyé. */
+  top: -220px;
+  right: -160px;
   pointer-events: none;
+}
+.tutoring-grec {
+  position: absolute;
+  top: clamp(22px, 3vw, 40px);
+  right: clamp(24px, 3.5vw, 48px);
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 8vw, 104px);
+  line-height: 1;
+  color: rgba(214, 200, 255, 0.2);
+  pointer-events: none;
+  user-select: none;
 }
 .tutoring .eyebrow {
   color: #c6b4ff;
@@ -759,6 +783,9 @@ ul {
   align-items: flex-start;
   gap: 12px;
   position: relative;
+  /* Descend le groupe de boutons pour laisser passer le filigrane grec, qui
+     occupe le haut de cette colonne. */
+  margin-top: 72px;
 }
 .tutoring-cta .btn {
   padding: 15px 26px;
@@ -770,22 +797,31 @@ ul {
   max-width: 30ch;
 }
 /* Le .btn-ghost standard est prévu pour un fond clair (texte foncé) :
-   illisible sur la bande sombre. Variante posée uniquement ici. */
-.tutoring-cta .btn-ghost {
+   illisible sur la bande sombre. Variante posée pour toute la bande —
+   « Laisser un avis » comme « Voir plus ». */
+.tutoring .btn-ghost {
   color: #fff;
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.28);
 }
-.tutoring-cta .btn-ghost:hover {
+.tutoring .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.13);
   border-color: rgba(255, 255, 255, 0.6);
 }
 
 /* ============================================================
-   Avis (témoignages) — lus dans la base commune avec aeeureka
+   Avis (témoignages) — lus dans la base commune avec aeeureka.
+   Ce bloc vit À L'INTÉRIEUR de la bande sombre `.tutoring` : ses couleurs
+   sont donc claires sur fond sombre, dans les deux thèmes du site.
    ============================================================ */
 .avis {
-  margin-top: 56px;
+  /* Occupe toute la largeur de la bande, sous les deux colonnes. */
+  grid-column: 1 / -1;
+  /* Au-dessus du halo violet, qui est peint après le contenu. */
+  position: relative;
+  margin-top: 44px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 .avis-title {
   font-family: var(--font-display);
@@ -795,7 +831,7 @@ ul {
 }
 .avis-intro {
   font-size: 15.5px;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.72);
   line-height: 1.6;
   margin-top: 10px;
   max-width: 62ch;
@@ -807,14 +843,14 @@ ul {
   margin-top: 28px;
 }
 .avis-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius);
   padding: 26px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 /* `hidden` seul ne suffit pas face à `display: flex` — sans cette règle, les
    cartes repliées resteraient visibles. */
@@ -823,18 +859,19 @@ ul {
 }
 .avis-card:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-sm);
-  border-color: #ded9ec;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.32);
 }
 .avis-quote {
   font-size: 15.5px;
-  color: var(--ink);
   line-height: 1.65;
   white-space: pre-line;
   flex: 1;
 }
+/* Placé en bas de la carte, après le bloc d'identité — comme sur aeeureka. */
 .avis-more {
   align-self: flex-start;
+  margin-top: 2px;
   background: none;
   border: none;
   padding: 0;
@@ -842,7 +879,7 @@ ul {
   font-family: var(--font-body);
   font-size: 14.5px;
   font-weight: 550;
-  color: var(--accent);
+  color: #c6b4ff;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -855,21 +892,24 @@ ul {
   flex-direction: column;
   gap: 8px;
   padding-top: 14px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 .avis-nom {
   font-weight: 600;
   font-size: 15px;
 }
+/* Couleur par défaut : celle de la fenêtre de lecture, qui suit le thème.
+   Sur la carte (fond sombre), elle est reprise juste en dessous. */
 .avis-detail {
   font-size: 13.5px;
   color: var(--muted);
 }
+.avis-meta .avis-detail {
+  color: rgba(255, 255, 255, 0.58);
+}
 .avis-matieres {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 2px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.72);
 }
 .avis-plus {
   display: flex;
@@ -953,6 +993,69 @@ ul {
 }
 
 /* ============================================================
+   Maxime — la respiration avant le pied de page
+   ============================================================ */
+.maxime-band {
+  padding: 88px 0 100px;
+}
+/* Méandre grec — motif de 12 × 15 px répété à l'horizontale. Repris tel quel
+   de la page « À propos » d'aeeureka, couleurs et dégradé compris, pour que le
+   même ornement dise la même chose sur les deux sites.
+   Le tracé est plus foncé en thème clair, plus lavande en thème sombre. */
+.meandre {
+  height: 15px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='15'%3E%3Cpath d='M0,13.5 H12 M1.5,13.5 V1.5 H10.5 V10.5 H4.5 V4.5 H7.5 V7.5' fill='none' stroke='%234054b273' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  /* Le motif s'efface aux deux bouts au lieu d'être coupé net. Mêmes bornes
+     que sur aeeureka : plein entre 18 % et 82 %, fondu de part et d'autre. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+}
+:root[data-theme='dark'] .meandre {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='15'%3E%3Cpath d='M0,13.5 H12 M1.5,13.5 V1.5 H10.5 V10.5 H4.5 V4.5 H7.5 V7.5' fill='none' stroke='%237889e68c' stroke-width='1'/%3E%3C/svg%3E");
+}
+.maxime-laurier {
+  display: block;
+  width: clamp(76px, 9vw, 96px);
+  margin: 0 auto 20px;
+  color: rgba(64, 84, 178, 0.45);
+}
+:root[data-theme='dark'] .maxime-laurier {
+  color: rgba(140, 157, 236, 0.6);
+}
+.maxime {
+  max-width: 44ch;
+  margin: 56px auto 0;
+  text-align: center;
+}
+.maxime-texte {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3.2vw, 30px);
+  line-height: 1.38;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.maxime-sig {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 26px;
+}
+.maxime-auteur {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.maxime-source {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ============================================================
    Footer
    ============================================================ */
 .site-footer {
@@ -1021,7 +1124,8 @@ html.js-anim .proj-card,
 html.js-anim .skill-group,
 html.js-anim .col-title,
 html.js-anim .tl-item,
-html.js-anim .tutoring {
+html.js-anim .tutoring,
+html.js-anim .maxime {
   opacity: 0;
 }
 html.js-anim .reveal-in {
@@ -1046,7 +1150,8 @@ html.js-anim .reveal-in {
   html.js-anim .skill-group,
   html.js-anim .col-title,
   html.js-anim .tl-item,
-  html.js-anim .tutoring {
+  html.js-anim .tutoring,
+  html.js-anim .maxime {
     opacity: 1 !important;
   }
 }
@@ -1074,6 +1179,11 @@ html.js-anim .reveal-in {
   .tutoring {
     grid-template-columns: 1fr;
     padding: 40px;
+  }
+  /* Empilé, le groupe de boutons n'est plus sous le filigrane : le décalage
+     qui le dégageait n'a plus lieu d'être. */
+  .tutoring-cta {
+    margin-top: 0;
   }
   .nav-links {
     display: none;

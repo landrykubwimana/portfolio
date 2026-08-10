@@ -61,6 +61,16 @@ export interface Tutoring {
   avisTitle: string;
   /** Phrase d'introduction sous ce sous-titre. */
   avisIntro: string;
+  /** Le nom en grec ancien, posé en filigrane dans le coin de la bande. */
+  greekName: string;
+}
+
+export interface Maxim {
+  /** La citation, sans guillemets : ils sont ajoutés à l'affichage. */
+  text: string;
+  author: string;
+  /** Petite ligne sous l'auteur. Vide ('') pour n'afficher que le nom. */
+  source: string;
 }
 
 export interface SkillGroup {
@@ -90,6 +100,7 @@ export interface Profile {
   education: EducationItem[];
   skills: SkillGroup[];
   tutoring: Tutoring;
+  maxim: Maxim;
 }
 
 export const profile: Profile = {
@@ -262,6 +273,20 @@ export const profile: Profile = {
 
     avisTitle: 'Témoignages',
     avisIntro:
-      'Avis recueillis auprès des familles et des élèves accompagnés par l’Académie, publiés avec leur consentement.',
+      'Avis recueillis auprès des familles et des élèves que j’ai accompagnés, publiés avec leur consentement.',
+
+    // « Eurêka » en grec ancien : « j'ai trouvé ». Le même mot, au même
+    // endroit, que sur la page « À propos » d'aeeureka.
+    greekName: 'εὕρηκα',
+  },
+
+  maxim: {
+    text: 'Les nombres gouvernent le monde.',
+    author: 'Pythagore',
+    // ⚠️ Pythagore n'a rien écrit : la maxime vient de ses successeurs
+    // (Aristote rapporte que les pythagoriciens tenaient le nombre pour la
+    // substance de toute chose). Cette ligne le dit sans détour.
+    // La vider ('') pour n'afficher que le nom.
+    source: 'maxime transmise par la tradition pythagoricienne',
   },
 };

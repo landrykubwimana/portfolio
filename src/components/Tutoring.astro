@@ -8,6 +8,10 @@ const { tutoring } = profile;
 <section class="section" id="tutorat">
   <div class="wrap">
     <div class="tutoring">
+      {/* Filigrane : décoratif, donc masqué aux lecteurs d'écran — le nom de
+          l'Académie est déjà annoncé juste en dessous, en toutes lettres. */}
+      <span class="tutoring-grec" aria-hidden="true">{tutoring.greekName}</span>
+
       <div>
         <span class="eyebrow">Services de tutorat</span>
         <h2 class="tutoring-title">{tutoring.headline}</h2>
@@ -26,8 +30,8 @@ const { tutoring } = profile;
         </a>
         <span class="tutoring-note">{tutoring.ctaNote}</span>
       </div>
-    </div>
 
-    <Avis />
+      <Avis />
+    </div>
   </div>
 </section>
