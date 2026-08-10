@@ -46,9 +46,13 @@ export interface EducationItem {
 
 export interface Tutoring {
   headline: string;
-  description: string;
-  /** Ex. ["Mathématiques", "Informatique", "Physique"] */
-  subjects: string[];
+  /** Un élément par paragraphe. */
+  description: string[];
+  /**
+   * Les matières et les cours ne sont PAS écrits ici : ils sont lus dans la
+   * base commune avec aeeureka, pour que les deux sites disent la même chose.
+   * Voir src/lib/catalogue.ts.
+   */
   /** Site de l'Académie (la vitrine). Voir le commentaire plus bas. */
   url: string;
   /** Formulaire de demande de tutorat, hébergé sur le site de l'Académie. */
@@ -57,6 +61,12 @@ export interface Tutoring {
   avisUrl: string;
   /** Phrase discrète sous les deux boutons. */
   ctaNote: string;
+  /** Titre du bloc de l'offre. Doit rester celui d'aeeureka. */
+  catalogueTitle: string;
+  /** Mention discrète sous la liste des niveaux. */
+  catalogueNote: string;
+  /** Mention sous la liste des niveaux. */
+  catalogueNote: string;
   /** Sous-titre du bloc d'avis. */
   avisTitle: string;
   /** Phrase d'introduction sous ce sous-titre. */
@@ -253,10 +263,13 @@ export const profile: Profile = {
 
   tutoring: {
     headline: "Académie d'Excellence Eurêka",
-    description:
-      "L'agence de tutorat que j'ai fondée et que je dirige. Aide aux devoirs, mise à niveau et préparation aux examens, du primaire à l'université — un accompagnement personnalisé, adapté au rythme de chaque élève et orienté vers le développement de son autonomie.",
-    subjects: ['Mathématiques', 'Sciences', 'Physique', 'Chimie', 'Programmation', 'Français'],
-
+    // Un élément = un paragraphe. Ce qu'on offre concrètement n'est plus
+    // décrit ici : le bloc « Matières et cours couverts », juste en dessous,
+    // le dit en détail et à jour.
+    description: [
+      'Mon histoire avec le tutorat commence tôt, avec mes petits frères et sœurs : c’est vers moi qu’ils se tournent quand quelque chose ne rentre pas. Je me découvre alors une nouvelle passion. En quatrième secondaire, ce réflexe de grand frère devient un métier : je deviens tuteur pour mon école.',
+      'Suivent des années à enseigner et à me perfectionner, dans plusieurs agences. Puis vient la pandémie : derrière les écrans, des élèves seuls devant leurs difficultés, presque sans accompagnement. Naît alors l’envie de faire autrement — ne pas seulement rattraper des notes, mais transmettre une façon de penser. C’est de là qu’est venue l’Académie d’Excellence Eurêka.',
+    ],
     // Site de l'Académie. La vitrine est encore derrière un mur « site en
     // préparation » : aucun bouton ne pointe ici pour l'instant, pour ne pas
     // envoyer les visiteurs dans une impasse. Le jour où elle ouvrira, il
@@ -270,6 +283,12 @@ export const profile: Profile = {
     avisUrl: 'https://aeeureka.com/avis?src=portfolio',
 
     ctaNote: 'Les demandes et les avis sont traités sur le site de l’Académie.',
+
+    catalogueTitle: 'Matières et cours couverts',
+    catalogueNote:
+      'Si le cours que vous cherchez n’est pas dans la liste, n’hésitez pas à me contacter pour que j’évalue votre besoin.',
+    catalogueNote:
+      'Si le cours que vous cherchez n’est pas dans la liste, n’hésitez pas à me contacter pour que j’évalue votre besoin.',
 
     avisTitle: 'Témoignages',
     avisIntro:

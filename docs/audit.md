@@ -41,6 +41,12 @@ Le texte grec et la maxime utilisent `--font-serif`, la serif du système — la
 - **Le libellé « Lire la lettre complète ».** Il parle de lettre alors que la règle d'affichage, elle, ne dépend pas du type d'avis. Les trois avis actuels sont des lettres, donc rien ne se voit. Le jour où un avis d'un autre type aura un texte complet, les deux sites diront « lettre » à tort.
 - **Les libellés du lien de l'auteur** (`LIEN_CARTE`) sont recopiés d'aeeureka. Rien n'empêche techniquement une divergence — voir le point 1 ci-dessus.
 
+### Catalogue (ajouté le 10 août 2026)
+
+- **« Programmation : Programmation — Python, Programmation — R… »** — les noms de cours répètent le nom de leur matière. La règle du cours homonyme ne les attrape pas, puisque les noms ne sont pas identiques. ⚠️ Question à trancher pour LES DEUX SITES : garder tel quel, ou renommer ces cours dans Supabase (« Python », « R », « SQL »). Ne pas raccourcir côté portfolio seulement — ce serait une divergence.
+- **L'icône de repli** (un simple cercle) est de mon invention : le serveur d'aeeureka était arrêté quand je l'ai écrite, je n'ai pas vu la sienne. À aligner. Les sept icônes de matières, elles, sont copiées à l'identique.
+- ~~Le libellé du bloc.~~ Réglé : le portfolio titre « Matières et cours couverts », comme aeeureka.
+
 ### Site
 
 - **`site: 'https://example.com'`** dans [`astro.config.mjs`](../astro.config.mjs) : c'est encore le domaine d'exemple. Il sert aux adresses absolues et aux aperçus de partage. À remplacer par l'adresse réelle.

@@ -34,13 +34,17 @@ Nom, titre, tagline, projets, expériences, formations, tutorat, liens sociaux :
 ```
 src/
 ├── data/profile.ts        # ← LE contenu (source unique de vérité)
+├── lib/supabase.ts        # LA connexion à la base (un seul endroit)
 ├── lib/avis.ts            # lecture des avis + libellés des cartes
+├── lib/catalogue.ts       # lecture de l'offre par niveau
 ├── styles/global.css      # système de design (couleurs, typo, composants)
 ├── layouts/Base.astro     # coquille HTML, polices, métadonnées SEO
 ├── components/             # sections de la page
 │   ├── Nav.astro
 │   ├── Hero.astro
 │   ├── Tutoring.astro     # section « services » + les deux liens Eurêka
+│   ├── Catalogue.astro    # l'offre par niveau, lue dans la base
+│   ├── IconeMatiere.astro # les icônes de matières (mêmes qu'aeeureka)
 │   ├── Avis.astro         # les témoignages, lus dans la base
 │   ├── Projects.astro
 │   ├── Skills.astro
@@ -48,8 +52,24 @@ src/
 │   ├── Maxime.astro       # la citation avant le pied de page
 │   └── Footer.astro
 └── pages/index.astro      # assemble les sections
-scripts/verifier-avis.mjs  # diagnostic : ce que le site voit dans la base
-public/favicon.svg         # favicon (monogramme LK)
+scripts/verifier-avis.mjs       # diagnostic : les avis lus dans la base
+scripts/verifier-catalogue.mjs  # diagnostic : l'offre par niveau
+public/favicon.svg              # favicon (monogramme LK)
+```
+
+## L'offre de tutorat
+
+Les matières et les cours affichés dans la section Tutorat viennent de la **même base que [aeeureka.com](https://aeeureka.com)** — rien n'est écrit en dur. Ajouter une matière sur aeeureka la fait apparaître ici en moins d'une minute.
+
+Les règles d'affichage sont celles d'aeeureka, reproduites à l'identique et documentées dans [`src/lib/catalogue.ts`](src/lib/catalogue.ts). Les deux qui comptent :
+
+1. Une matière est offerte à un niveau **si `matieres_niveaux` le dit** — jamais parce qu'un cours existe à ce niveau. Le primaire a trois matières et aucun cours.
+2. Un cours qui **porte le nom de sa matière est masqué** (« Chimie › Chimie » n'apprend rien). Le cours reste en base et reste sélectionnable dans les formulaires : c'est un choix d'affichage. Sans cette règle, les deux sites montreraient des listes différentes.
+
+Vérifier ce que le site voit :
+
+```bash
+npm run verifier-catalogue
 ```
 
 ## Les avis de l'Académie

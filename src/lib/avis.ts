@@ -10,10 +10,10 @@
  *
  * ⚠️ Ce fichier n'utilise que la clé « anon », publique par conception.
  *    La clé service_role ne doit JAMAIS se trouver dans ce dépôt : elle ignore
- *    toute la sécurité de la base.
+ *    toute la sécurité de la base. Voir `supabase.ts`.
  */
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from 'astro:env/server';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { connexion, avertirVariablesAbsentes } from './supabase';
 
 /* ============================================================
    Libellés affichés sur les cartes
@@ -144,14 +144,6 @@ interface AvisRow {
   avis_matieres: LienMatiere[] | null;
 }
 
-function connexion(): SupabaseClient | null {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
-  // Pas de session à conserver : on ne fait que lire, sans utilisateur connecté.
-  return createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-}
-
 /**
  * Renvoie les avis publiés, du plus récent au plus ancien.
  *
@@ -168,10 +160,7 @@ function connexion(): SupabaseClient | null {
 export async function getAvis(): Promise<AvisAffiche[]> {
   const sb = connexion();
   if (!sb) {
-    console.warn(
-      '[avis] SUPABASE_URL / SUPABASE_ANON_KEY absents — la section des avis restera vide. ' +
-        'Local : voir .env.example. En ligne : Vercel → Settings → Environment Variables.'
-    );
+    avertirVariablesAbsentes('avis');
     return [];
   }
 

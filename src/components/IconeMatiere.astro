@@ -1,0 +1,51 @@
+---
+/**
+ * ICÔNE DE MATIÈRE — reprise à l'identique de celles d'aeeureka.
+ *
+ * La correspondance se fait par le NOM de la matière, comme là-bas. C'est
+ * fragile par nature : renommer une matière dans Supabase décrocherait son
+ * icône. D'où le repli sur une forme neutre — ajouter une matière au catalogue
+ * dégrade le rendu, mais ne le casse jamais.
+ *
+ * ⚠️ Si tu ajoutes une matière et qu'elle apparaît avec le petit cercle, c'est
+ *    ici qu'il faut la déclarer.
+ */
+interface Props {
+  nom: string;
+}
+
+const { nom } = Astro.props;
+
+const ICONES: Record<string, string> = {
+  français:
+    '<path d="M3 5.5c3-1 6-1 9 1 3-2 6-2 9-1v12c-3-1-6-1-9 1-3-2-6-2-9-1z" /><path d="M12 6.5v12" />',
+  mathématiques:
+    '<rect x="4.5" y="2.5" width="15" height="19" rx="2.5" /><path d="M8 6.5h8" /><path d="M8 11.5h2.5M13.5 11.5h2.5M8 16h2.5M13.5 16h2.5" />',
+  sciences:
+    '<circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" /><ellipse cx="12" cy="12" rx="9.5" ry="4" /><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)" /><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)" />',
+  chimie:
+    '<path d="M9 3h6M10 3v6l-4.2 7.8a1.4 1.4 0 0 0 1.2 2.2h10a1.4 1.4 0 0 0 1.2-2.2L14 9V3" /><path d="M7.5 15h9" />',
+  physique:
+    '<path d="M9 5.5C6.5 5.5 4.5 7.7 4.5 11c0 4 2.5 8 5 8 .9 0 1.5-.5 2.5-.5s1.5.5 2.5.5c2.5 0 5-4 5-8 0-3.3-2-5.5-4.5-5.5-1.5 0-2.5.8-3 1.5-.5-.7-1.5-1.5-3-1.5z" /><path d="M12 7c0-1.8.5-3.3 2-4" /><path d="M14 3c1.3-1 3-.8 3.6 0-.6 1.4-2.4 1.6-3.6.6z" />',
+  biologie:
+    '<path d="M8.5 3c0 4.5 7 5.5 7 9s-7 4.5-7 9" /><path d="M15.5 3c0 4.5-7 5.5-7 9s7 4.5 7 9" /><path d="M9.6 5.6h4.8M9 10.6h6M9 13.4h6M9.6 18.4h4.8" />',
+  programmation: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5.5l-3 13" />',
+};
+
+/** Repli : une forme neutre, pour qu'une matière inconnue reste présentable. */
+const NEUTRE = '<circle cx="12" cy="12" r="8" />';
+
+const contenu = ICONES[nom.trim().toLowerCase()] ?? NEUTRE;
+---
+
+<svg
+  class="cat-icone"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  set:html={contenu}
+/>

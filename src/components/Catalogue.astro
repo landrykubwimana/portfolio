@@ -1,0 +1,103 @@
+---
+/**
+ * CATALOGUE — l'offre de tutorat par niveau, lue dans la base commune.
+ *
+ * Une ligne par niveau : toutes les matières visibles d'emblée, les cours
+ * repliés derrière un bouton. Un niveau sans cours n'a pas de bouton — et
+ * jamais de mention « aucun cours », qui suggérerait un manque là où il n'y en
+ * a pas.
+ *
+ * Les cours sont TOUJOURS présents dans le HTML : le bouton ne fait que les
+ * masquer une fois la page chargée. Sans JavaScript, tout reste lisible.
+ *
+ * Le séparateur entre une matière et ses cours est un deux-points, pas un
+ * tiret : certains noms de cours en contiennent déjà un (« Programmation —
+ * Python ») et les deux se confondraient.
+ */
+import { profile } from '../data/profile';
+import { getCatalogue } from '../lib/catalogue';
+import IconeMatiere from './IconeMatiere.astro';
+
+const niveaux = await getCatalogue();
+---
+
+{
+  niveaux.length > 0 && (
+    <div class="catalogue">
+      <h3 class="cat-titre">{profile.tutoring.catalogueTitle}</h3>
+      {niveaux.map((n) => (
+        <div class="cat-ligne">
+          <span class="cat-niveau">{n.libelle}</span>
+
+          <div class="cat-corps">
+            <ul class="cat-matieres">
+              {n.matieres.map((m) => (
+                <li class="cat-matiere">
+                  <IconeMatiere nom={m.nom} />
+                  {m.nom}
+                </li>
+              ))}
+            </ul>
+
+            {n.aDesCours && (
+              <>
+                <button
+                  class="cat-plus"
+                  type="button"
+                  data-cat-bouton={n.cle}
+                  aria-expanded="false"
+                  aria-controls={`cours-${n.cle}`}
+                  hidden
+                >
+                  Voir les cours <span class="arrow">→</span>
+                </button>
+
+                <div class="cat-cours" id={`cours-${n.cle}`} data-cat-cours={n.cle}>
+                  {n.matieres
+                    .filter((m) => m.cours.length > 0)
+                    .map((m) => (
+                      <p class="cat-cours-ligne">
+                        <span class="cat-cours-matiere">{m.nom}</span>
+                        {' : '}
+                        {m.cours.join(', ')}
+                      </p>
+                    ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <p class="cat-note">{profile.tutoring.catalogueNote}</p>
+    </div>
+  )
+}
+
+<script>
+  // Replie les cours une fois la page chargée, et révèle le bouton qui les
+  // rouvre. Fait dans cet ordre pour que rien ne soit jamais masqué sans
+  // moyen de le rouvrir : sans JavaScript, tout reste affiché.
+  (function () {
+    document.querySelectorAll<HTMLButtonElement>('[data-cat-bouton]').forEach(function (bouton) {
+      const cle = bouton.dataset.catBouton;
+      const bloc = document.querySelector<HTMLElement>('[data-cat-cours="' + cle + '"]');
+      if (!bloc) return;
+
+      let ouvert = false;
+      function rendre() {
+        bloc!.hidden = !ouvert;
+        bouton.setAttribute('aria-expanded', String(ouvert));
+        bouton.firstChild!.nodeValue = ouvert ? 'Masquer les cours ' : 'Voir les cours ';
+        bouton.classList.toggle('est-ouvert', ouvert);
+      }
+
+      bouton.hidden = false;
+      rendre();
+      bouton.addEventListener('click', function () {
+        ouvert = !ouvert;
+        rendre();
+      });
+    });
+  })();
+</script>

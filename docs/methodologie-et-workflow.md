@@ -43,13 +43,17 @@ Les principes qui ont guidé la conception :
 ```
 src/
 ├── data/profile.ts        # ← LE contenu (source unique de vérité)
+├── lib/supabase.ts        # LA connexion à la base (un seul endroit)
 ├── lib/avis.ts            # lecture des avis + libellés des cartes
+├── lib/catalogue.ts       # lecture de l'offre par niveau
 ├── styles/global.css      # système de design (tokens, composants)
 ├── layouts/Base.astro     # coquille HTML, polices, métadonnées SEO
 ├── components/             # sections de la page
 │   ├── Nav.astro
 │   ├── Hero.astro
 │   ├── Tutoring.astro     # section « services » + les deux liens Eurêka
+│   ├── Catalogue.astro    # l'offre par niveau, lue dans la base
+│   ├── IconeMatiere.astro # les icônes de matières (mêmes qu'aeeureka)
 │   ├── Avis.astro         # les témoignages, lus dans la base
 │   ├── Projects.astro
 │   ├── Skills.astro

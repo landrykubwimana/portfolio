@@ -697,10 +697,8 @@ ul {
   background: linear-gradient(135deg, #17151f 0%, #2a2140 100%);
   color: #fff;
   padding: 56px;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 40px;
-  align-items: center;
+  /* Une seule colonne : l'introduction, l'offre et les témoignages occupent
+     toute la largeur, et les deux boutons ferment la bande. */
 }
 .tutoring::after {
   content: '';
@@ -752,49 +750,140 @@ ul {
   font-size: 16.5px;
   color: rgba(255, 255, 255, 0.72);
   line-height: 1.6;
-  max-width: 46ch;
+  /* Large, mais pas jusqu'au bord : au-delà, une ligne devient pénible à lire.
+     Même mesure que l'introduction des témoignages. */
+  max-width: 62ch;
   position: relative;
 }
-.subjects {
+.tutoring-desc + .tutoring-desc {
+  margin-top: 14px;
+}
+/* ------------------------------------------------------------
+   Catalogue : l'offre par niveau, lue dans la base commune.
+   Une ligne par niveau, à l'intérieur de la bande sombre.
+   ------------------------------------------------------------ */
+.catalogue {
+  position: relative; /* au-dessus du halo, peint après le contenu */
+  margin-top: 44px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.cat-titre {
+  margin-bottom: 8px;
+}
+.cat-ligne {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 4px 18px;
+  /* `start` et non `stretch` : un niveau sans cours ne doit pas s'étirer à la
+     hauteur de son voisin et laisser un grand vide. */
+  align-items: start;
+  padding: 14px 0;
+}
+.cat-ligne + .cat-ligne {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+.cat-niveau {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.62);
+  padding-top: 7px;
+}
+.cat-matieres {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
-  position: relative;
+  gap: 8px;
 }
-.subject-chip {
+.cat-matiere {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 13.5px;
   font-weight: 500;
   color: #fff;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 8px 14px;
+  padding: 7px 13px 7px 11px;
   border-radius: 100px;
-  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
 }
-.subject-chip:hover {
-  transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.16);
+.cat-icone {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: #c6b4ff;
 }
-.tutoring-cta {
+.cat-plus {
+  margin-top: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 550;
+  color: #c6b4ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cat-plus[hidden] {
+  display: none;
+}
+.cat-plus:hover .arrow {
+  transform: translateX(3px);
+}
+.cat-plus.est-ouvert .arrow {
+  transform: rotate(90deg);
+}
+.cat-cours {
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  gap: 7px;
+}
+.cat-cours[hidden] {
+  display: none;
+}
+.cat-cours-ligne {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+}
+.cat-cours-matiere {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 550;
+}
+.cat-note {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.58);
+  max-width: 62ch;
+}
+/* Les deux boutons ferment la bande, sous les témoignages. En ligne plutôt
+   qu'empilés : à pleine largeur, une colonne étroite laisserait un grand vide
+   à sa droite — c'est précisément ce qu'on vient de corriger. */
+.tutoring-cta {
   position: relative;
-  /* Descend le groupe de boutons pour laisser passer le filigrane grec, qui
-     occupe le haut de cette colonne. */
-  margin-top: 72px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 44px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 .tutoring-cta .btn {
   padding: 15px 26px;
   font-size: 16px;
 }
 .tutoring-note {
+  /* Toujours sur sa propre ligne, sous les deux boutons. */
+  flex-basis: 100%;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
-  max-width: 30ch;
 }
 /* Le .btn-ghost standard est prévu pour un fond clair (texte foncé) :
    illisible sur la bande sombre. Variante posée pour toute la bande —
@@ -815,15 +904,14 @@ ul {
    sont donc claires sur fond sombre, dans les deux thèmes du site.
    ============================================================ */
 .avis {
-  /* Occupe toute la largeur de la bande, sous les deux colonnes. */
-  grid-column: 1 / -1;
   /* Au-dessus du halo violet, qui est peint après le contenu. */
   position: relative;
   margin-top: 44px;
   padding-top: 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
-.avis-title {
+.avis-title,
+.cat-titre {
   font-family: var(--font-display);
   font-weight: 650;
   font-size: clamp(22px, 2.6vw, 28px);
@@ -1177,13 +1265,15 @@ html.js-anim .reveal-in {
     gap: 44px;
   }
   .tutoring {
-    grid-template-columns: 1fr;
     padding: 40px;
   }
-  /* Empilé, le groupe de boutons n'est plus sous le filigrane : le décalage
-     qui le dégageait n'a plus lieu d'être. */
-  .tutoring-cta {
-    margin-top: 0;
+  /* Le niveau passe au-dessus de ses matières plutôt qu'à leur gauche. */
+  .cat-ligne {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .cat-niveau {
+    padding-top: 0;
   }
   .nav-links {
     display: none;

@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "verifier-avis": "node --env-file-if-exists=.env scripts/verifier-avis.mjs"
+    "verifier-avis": "node --env-file-if-exists=.env scripts/verifier-avis.mjs",
+    "verifier-catalogue": "node --env-file-if-exists=.env scripts/verifier-catalogue.mjs"
   },
   "dependencies": {
     "@astrojs/vercel": "^11.0.5",

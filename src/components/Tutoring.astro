@@ -1,5 +1,6 @@
 ---
 import { profile } from '../data/profile';
+import Catalogue from './Catalogue.astro';
 import Avis from './Avis.astro';
 
 const { tutoring } = profile;
@@ -12,14 +13,14 @@ const { tutoring } = profile;
           l'Académie est déjà annoncé juste en dessous, en toutes lettres. */}
       <span class="tutoring-grec" aria-hidden="true">{tutoring.greekName}</span>
 
-      <div>
+      <div class="tutoring-intro">
         <span class="eyebrow">Services de tutorat</span>
         <h2 class="tutoring-title">{tutoring.headline}</h2>
-        <p class="tutoring-desc">{tutoring.description}</p>
-        <div class="subjects">
-          {tutoring.subjects.map((s) => <span class="subject-chip">{s}</span>)}
-        </div>
+        {tutoring.description.map((p) => <p class="tutoring-desc">{p}</p>)}
       </div>
+
+      <Catalogue />
+      <Avis />
 
       <div class="tutoring-cta">
         <a class="btn btn-accent" href={tutoring.demandeUrl} target="_blank" rel="noopener">
@@ -30,8 +31,6 @@ const { tutoring } = profile;
         </a>
         <span class="tutoring-note">{tutoring.ctaNote}</span>
       </div>
-
-      <Avis />
     </div>
   </div>
 </section>
