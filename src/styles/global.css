@@ -59,7 +59,8 @@
 :root[data-theme='dark'] .portrait {
   border-color: var(--line);
 }
-:root[data-theme='dark'] .proj-card:hover {
+:root[data-theme='dark'] .proj-card:hover,
+:root[data-theme='dark'] .avis-card:hover {
   border-color: #3a3550;
 }
 :root[data-theme='dark'] .blob {
@@ -192,7 +193,8 @@ ul {
   transform: translateY(-1px);
   box-shadow: 0 12px 28px -10px rgba(107, 94, 246, 0.6);
 }
-.btn .arrow {
+.btn .arrow,
+.avis-more .arrow {
   transition: transform 0.2s ease;
 }
 .btn:hover .arrow {
@@ -765,6 +767,189 @@ ul {
 .tutoring-note {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
+  max-width: 30ch;
+}
+/* Le .btn-ghost standard est prévu pour un fond clair (texte foncé) :
+   illisible sur la bande sombre. Variante posée uniquement ici. */
+.tutoring-cta .btn-ghost {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.tutoring-cta .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   Avis (témoignages) — lus dans la base commune avec aeeureka
+   ============================================================ */
+.avis {
+  margin-top: 56px;
+}
+.avis-title {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(22px, 2.6vw, 28px);
+  letter-spacing: -0.01em;
+}
+.avis-intro {
+  font-size: 15.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 10px;
+  max-width: 62ch;
+}
+.avis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+.avis-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+/* `hidden` seul ne suffit pas face à `display: flex` — sans cette règle, les
+   cartes repliées resteraient visibles. */
+.avis-card[hidden] {
+  display: none;
+}
+.avis-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+  border-color: #ded9ec;
+}
+.avis-quote {
+  font-size: 15.5px;
+  color: var(--ink);
+  line-height: 1.65;
+  white-space: pre-line;
+  flex: 1;
+}
+.avis-more {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 550;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.avis-more:hover .arrow {
+  transform: translateX(3px);
+}
+.avis-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.avis-nom {
+  font-weight: 600;
+  font-size: 15px;
+}
+.avis-detail {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.avis-matieres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+.avis-plus {
+  display: flex;
+  width: fit-content;
+  margin: 28px auto 0;
+}
+.avis-plus[hidden] {
+  display: none;
+}
+
+/* Fenêtre de lecture (« Lire la suite ») */
+.avis-dialog {
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  width: min(680px, calc(100vw - 32px));
+  max-width: none;
+  /* Le navigateur centre les fenêtres modales avec `margin: auto`, mais le
+     reset en haut de ce fichier (`* { margin: 0 }`) l'annule : sans cette
+     ligne, la fenêtre se colle en haut à gauche de l'écran. */
+  margin: auto;
+}
+.avis-dialog::backdrop {
+  background: rgba(16, 14, 23, 0.55);
+}
+.avis-dialog-inner {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 36px;
+  max-height: min(80vh, 760px);
+  overflow-y: auto;
+}
+.avis-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+.avis-close:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.avis-dialog-nom {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 21px;
+  padding-right: 44px;
+}
+.avis-dialog .avis-detail {
+  margin-top: 6px;
+}
+.avis-texte {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+.avis-mention {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
 }
 
 /* ============================================================
@@ -900,6 +1085,12 @@ html.js-anim .reveal-in {
   }
   .section {
     padding: 72px 0;
+  }
+  .tutoring {
+    padding: 32px 24px;
+  }
+  .avis-dialog-inner {
+    padding: 28px 22px;
   }
   .badge-1 { left: 0; }
   .badge-2 { right: 0; }

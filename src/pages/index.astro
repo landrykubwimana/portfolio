@@ -7,16 +7,24 @@ import Skills from '../components/Skills.astro';
 import Parcours from '../components/Parcours.astro';
 import Tutoring from '../components/Tutoring.astro';
 import Footer from '../components/Footer.astro';
+
+/**
+ * Cette page est fabriquée à la demande (et non une fois pour toutes au
+ * déploiement), pour que les avis affichés soient toujours ceux d'aeeureka.
+ * Le résultat est réutilisé pendant 60 secondes — voir `isr` dans
+ * astro.config.mjs. Toutes les autres pages resteraient statiques.
+ */
+export const prerender = false;
 ---
 
 <Base>
   <Nav />
   <main>
     <Hero />
+    <Tutoring />
     <Projects />
     <Skills />
     <Parcours />
-    <Tutoring />
   </main>
   <Footer />
 </Base>

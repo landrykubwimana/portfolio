@@ -1,0 +1,141 @@
+---
+/**
+ * AVIS — les témoignages de l'Académie, lus en direct dans la base commune
+ * aux deux sites. Le portfolio et aeeureka.com affichent donc exactement les
+ * mêmes avis, dans le même ordre.
+ *
+ * Rien à modérer ici : ce composant ne fait qu'afficher.
+ */
+import { profile } from '../data/profile';
+import { getAvis } from '../lib/avis';
+
+const { tutoring } = profile;
+const avis = await getAvis();
+
+/** Nombre de cartes visibles avant d'avoir à cliquer sur « Voir plus ». */
+const VISIBLES = 3;
+---
+
+{
+  avis.length > 0 && (
+    <div class="avis">
+      <h3 class="avis-title">{tutoring.avisTitle}</h3>
+      <p class="avis-intro">{tutoring.avisIntro}</p>
+
+      <div class="avis-grid" data-avis-grille data-avis-visibles={VISIBLES}>
+        {avis.map((a) => {
+          const details = [a.lien, a.niveaux, a.periode].filter(Boolean);
+          return (
+            <article class="avis-card">
+              <p class="avis-quote">{a.commentaire}</p>
+
+              {a.texteComplet.length > 0 && (
+                <button class="avis-more" type="button" data-avis-open={a.id}>
+                  Lire la suite <span class="arrow">→</span>
+                </button>
+              )}
+
+              <footer class="avis-meta">
+                <span class="avis-nom">{a.nom}</span>
+                {details.length > 0 && <span class="avis-detail">{details.join(' · ')}</span>}
+                {a.matieres.length > 0 && (
+                  <span class="avis-matieres">
+                    {a.matieres.map((m) => (
+                      <span class="tag">{m}</span>
+                    ))}
+                  </span>
+                )}
+              </footer>
+
+              {a.texteComplet.length > 0 && (
+                <dialog class="avis-dialog" id={`avis-${a.id}`} aria-labelledby={`avis-${a.id}-nom`}>
+                  <div class="avis-dialog-inner">
+                    <button class="avis-close" type="button" data-avis-close aria-label="Fermer">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M18 6 6 18M6 6l12 12" />
+                      </svg>
+                    </button>
+
+                    <h4 class="avis-dialog-nom" id={`avis-${a.id}-nom`}>
+                      {a.nom}
+                    </h4>
+                    {details.length > 0 && <p class="avis-detail">{details.join(' · ')}</p>}
+
+                    <div class="avis-texte">
+                      {a.texteComplet.map((p) => (
+                        <p>{p}</p>
+                      ))}
+                    </div>
+
+                    {a.mention && <p class="avis-mention">{a.mention}</p>}
+                  </div>
+                </dialog>
+              )}
+            </article>
+          );
+        })}
+      </div>
+
+      {/* Rendu masqué : le script ne le montre que s'il y a plus de cartes que
+          de places. Sans JavaScript, toutes les cartes restent visibles et ce
+          bouton ne sert à rien — jamais de contenu caché sans moyen de l'ouvrir. */}
+      <button class="btn btn-ghost avis-plus" type="button" data-avis-plus aria-expanded="false" hidden>
+        Voir plus
+      </button>
+    </div>
+  )
+}
+
+<script>
+  // Fenêtre de lecture (« Lire la suite ») + repli de la grille.
+  (function () {
+    document.querySelectorAll<HTMLButtonElement>('[data-avis-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const boite = document.getElementById('avis-' + btn.dataset.avisOpen) as HTMLDialogElement | null;
+        if (!boite) return;
+        if (typeof boite.showModal === 'function') boite.showModal();
+        else boite.setAttribute('open', '');
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-avis-close]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btn.closest('dialog')?.close();
+      });
+    });
+
+    // Clic sur le fond sombre : ferme aussi.
+    document.querySelectorAll<HTMLDialogElement>('.avis-dialog').forEach(function (boite) {
+      boite.addEventListener('click', function (e) {
+        if (e.target === boite) boite.close();
+      });
+    });
+
+    const grille = document.querySelector<HTMLElement>('[data-avis-grille]');
+    const bouton = document.querySelector<HTMLButtonElement>('[data-avis-plus]');
+    if (!grille || !bouton) return;
+
+    const cartes = Array.from(grille.querySelectorAll<HTMLElement>('.avis-card'));
+    const seuil = Number(grille.dataset.avisVisibles) || 3;
+    if (cartes.length <= seuil) return;
+
+    let deplie = false;
+    const reste = cartes.length - seuil;
+    function rendre() {
+      cartes.forEach(function (c, i) {
+        c.hidden = !deplie && i >= seuil;
+      });
+      bouton!.textContent = deplie
+        ? 'Voir moins'
+        : 'Voir les ' + reste + (reste > 1 ? ' autres avis' : ' autre avis');
+      bouton!.setAttribute('aria-expanded', String(deplie));
+    }
+
+    bouton.hidden = false;
+    rendre();
+    bouton.addEventListener('click', function () {
+      deplie = !deplie;
+      rendre();
+    });
+  })();
+</script>

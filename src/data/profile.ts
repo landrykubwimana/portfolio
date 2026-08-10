@@ -49,8 +49,18 @@ export interface Tutoring {
   description: string;
   /** Ex. ["Mathématiques", "Informatique", "Physique"] */
   subjects: string[];
-  /** Lien vers le futur site de tutorat (Site B). Placeholder pour l'instant. */
+  /** Site de l'Académie (la vitrine). Voir le commentaire plus bas. */
   url: string;
+  /** Formulaire de demande de tutorat, hébergé sur le site de l'Académie. */
+  demandeUrl: string;
+  /** Formulaire pour laisser un avis, hébergé sur le site de l'Académie. */
+  avisUrl: string;
+  /** Phrase discrète sous les deux boutons. */
+  ctaNote: string;
+  /** Sous-titre du bloc d'avis. */
+  avisTitle: string;
+  /** Phrase d'introduction sous ce sous-titre. */
+  avisIntro: string;
 }
 
 export interface SkillGroup {
@@ -235,7 +245,23 @@ export const profile: Profile = {
     description:
       "L'agence de tutorat que j'ai fondée et que je dirige. Aide aux devoirs, mise à niveau et préparation aux examens, du primaire à l'université — un accompagnement personnalisé, adapté au rythme de chaque élève et orienté vers le développement de son autonomie.",
     subjects: ['Mathématiques', 'Sciences', 'Physique', 'Chimie', 'Programmation', 'Français'],
-    // Site de tutorat Eurêka (Site B — à construire). Domaine déjà réservé.
+
+    // Site de l'Académie. La vitrine est encore derrière un mur « site en
+    // préparation » : aucun bouton ne pointe ici pour l'instant, pour ne pas
+    // envoyer les visiteurs dans une impasse. Le jour où elle ouvrira, il
+    // suffira de rajouter un bouton vers cette adresse dans Tutoring.astro.
     url: 'https://aeeureka.com',
+
+    // ⚠️ NE PAS RETIRER le « ?src=portfolio » de ces deux adresses.
+    //    Le site de l'Académie lit ce paramètre et l'enregistre : c'est lui
+    //    qui dit d'où viennent les demandes et les avis.
+    demandeUrl: 'https://aeeureka.com/demande?src=portfolio',
+    avisUrl: 'https://aeeureka.com/avis?src=portfolio',
+
+    ctaNote: 'Les demandes et les avis sont traités sur le site de l’Académie.',
+
+    avisTitle: 'Témoignages',
+    avisIntro:
+      'Avis recueillis auprès des familles et des élèves accompagnés par l’Académie, publiés avec leur consentement.',
   },
 };
