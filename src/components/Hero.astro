@@ -25,27 +25,27 @@ const firstName = profile.name.split(' ')[0];
     <p class="role reveal d3">{profile.role}</p>
     <p class="lead reveal d3">{profile.tagline}</p>
 
-    <div class="cta-row reveal d4">
-      <a class="btn btn-primary" href="#projets">
-        Voir mes projets <span class="arrow">→</span>
-      </a>
-      <a class="btn btn-ghost" href="#tutorat">Réserver du tutorat</a>
-    </div>
-
-    <div class="chips reveal d5">
-      <span class="chip">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>
-        Parcours académique
-      </span>
-      <span class="chip">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" /></svg>
-        Projets &amp; réalisations
-      </span>
-      <span class="chip">
+    {/* Ces pastilles sont la navigation du hero : elles mènent aux sections,
+        dans l'ordre où celles-ci apparaissent dans la page. Ce sont de vrais
+        liens — auparavant elles ressemblaient à des boutons sans en être. */}
+    <nav class="chips reveal d4" aria-label="Sections de la page">
+      <a class="chip" href="#tutorat">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>
         Tutorat
-      </span>
-    </div>
+      </a>
+      <a class="chip" href="#projets">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" /></svg>
+        Projets
+      </a>
+      <a class="chip" href="#competences">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" /></svg>
+        Compétences
+      </a>
+      <a class="chip" href="#parcours">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>
+        Parcours
+      </a>
+    </nav>
   </div>
 
   <div class="visual reveal d4">
@@ -68,20 +68,14 @@ const firstName = profile.name.split(' ')[0];
       <span class="ic">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
       </span>
-      <div>
-        <strong>Projets</strong>
-        <small>Portfolio à jour</small>
-      </div>
+      <strong>Portfolio à jour</strong>
     </div>
 
     <div class="badge badge-2">
       <span class="ic">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="m22 4-10 10.01-3-3" /></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" /></svg>
       </span>
-      <div>
-        <strong>Tutorat</strong>
-        <small>Réserve une séance</small>
-      </div>
+      <strong>{profile.location}</strong>
     </div>
   </div>
 </section>

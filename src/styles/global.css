@@ -156,13 +156,18 @@ ul {
 /* ============================================================
    Buttons
    ============================================================ */
+/* Tous les boutons du site sont des ovales, et tous à la même mesure que le
+   bouton « Faire une demande » d'aeeureka : 44 px de haut, texte de 14 px en
+   gras, 24 px de retrait horizontal (23 px de rembourrage + 1 px de bordure).
+   Une seule règle, donc aucune dérive possible d'un bouton à l'autre. */
 .btn {
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 550;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
   cursor: pointer;
-  border-radius: 12px;
-  padding: 12px 22px;
+  border-radius: 999px;
+  padding: 11px 23px;
   border: 1px solid transparent;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   display: inline-flex;
@@ -256,20 +261,18 @@ ul {
 .nav-link:hover {
   color: var(--ink);
 }
-.nav-cta {
-  padding: 10px 18px;
-  font-size: 14.5px;
-}
+/* Le bouton de la barre de navigation suit la mesure commune : voir `.btn`. */
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 .theme-toggle {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   flex: none;
-  border-radius: 10px;
+  /* Rond, pour suivre les boutons en ovale, et à la même hauteur qu'eux. */
+  border-radius: 50%;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
@@ -392,20 +395,12 @@ ul {
   max-width: 52ch;
   margin-bottom: 32px;
 }
-.cta-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 38px;
-}
-.cta-row .btn {
-  padding: 14px 24px;
-  font-size: 15.5px;
-}
 .chips {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  /* L'espace que laissait la rangée de boutons, désormais retirée. */
+  margin-top: 34px;
 }
 .chip {
   display: inline-flex;
@@ -416,7 +411,17 @@ ul {
   background: var(--surface);
   border: 1px solid var(--line);
   padding: 9px 15px;
-  border-radius: 11px;
+  border-radius: 100px;
+  /* Même effet de survol que les pastilles de compétences et de matières. */
+  transition: border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.chip:hover svg {
+  color: var(--accent);
 }
 .chip svg {
   color: var(--accent);
@@ -469,6 +474,9 @@ ul {
   gap: 11px;
   font-size: 13.5px;
   font-weight: 500;
+  /* Une étiquette tient sur une ligne : sans cette règle, « Portfolio à jour »
+     se coupait en deux dans la largeur laissée par la colonne du portrait. */
+  white-space: nowrap;
 }
 .badge .ic {
   width: 34px;
@@ -478,12 +486,6 @@ ul {
   display: grid;
   place-items: center;
   color: var(--accent);
-}
-.badge small {
-  display: block;
-  color: var(--muted);
-  font-weight: 400;
-  font-size: 12px;
 }
 .badge-1 {
   top: 6%;
@@ -805,6 +807,15 @@ ul {
   border: 1px solid rgba(255, 255, 255, 0.14);
   padding: 7px 13px 7px 11px;
   border-radius: 100px;
+  /* Même effet de survol que les pastilles de compétences : la bordure prend
+     la couleur d'accent et la pastille se soulève d'un pixel. Sur la bande
+     sombre, l'accent est le lavande clair — le violet du thème clair y serait
+     invisible. */
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+.cat-matiere:hover {
+  border-color: #c6b4ff;
+  transform: translateY(-1px);
 }
 .cat-icone {
   width: 15px;
@@ -874,10 +885,6 @@ ul {
   margin-top: 44px;
   padding-top: 36px;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-.tutoring-cta .btn {
-  padding: 15px 26px;
-  font-size: 16px;
 }
 .tutoring-note {
   /* Toujours sur sa propre ligne, sous les deux boutons. */
