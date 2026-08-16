@@ -42,7 +42,8 @@ src/
 ├── components/             # sections de la page
 │   ├── Nav.astro
 │   ├── Hero.astro
-│   ├── Tutoring.astro     # section « services » + les deux liens Eurêka
+│   ├── Services.astro     # les trois services offerts (annonce)
+│   ├── Tutoring.astro     # le tutorat en détail + les deux liens Eurêka
 │   ├── Catalogue.astro    # l'offre par niveau, lue dans la base
 │   ├── IconeMatiere.astro # les icônes de matières (mêmes qu'aeeureka)
 │   ├── Avis.astro         # les témoignages, lus dans la base

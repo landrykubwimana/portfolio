@@ -17,6 +17,17 @@ export interface SocialLinks {
   email?: string;
 }
 
+export interface Service {
+  title: string;
+  description: string;
+  /**
+   * Lien optionnel au bas de la carte. Les deux champs vont ensemble : sans
+   * l'un des deux, aucun lien ne s'affiche.
+   */
+  linkLabel?: string;
+  linkHref?: string;
+}
+
 export interface Project {
   title: string;
   description: string;
@@ -65,8 +76,6 @@ export interface Tutoring {
   catalogueTitle: string;
   /** Mention discrète sous la liste des niveaux. */
   catalogueNote: string;
-  /** Mention sous la liste des niveaux. */
-  catalogueNote: string;
   /** Sous-titre du bloc d'avis. */
   avisTitle: string;
   /** Phrase d'introduction sous ce sous-titre. */
@@ -105,6 +114,7 @@ export interface Profile {
   available: boolean;
   availableLabel: string;
   social: SocialLinks;
+  services: Service[];
   projects: Project[];
   experience: ExperienceItem[];
   education: EducationItem[];
@@ -131,8 +141,60 @@ export const profile: Profile = {
     email: 'landrykub@icloud.com',
   },
 
+  // Les trois services offerts, annoncés juste sous le hero. Le tutorat est
+  // le seul à porter un lien : sa section détaillée est plus bas dans la page.
+  services: [
+    {
+      title: 'Tutorat',
+      description:
+        "Accompagnement en mathématiques et en sciences, du primaire à l'université, à travers l'Académie d'Excellence Eurêka. Les matières, les cours et les niveaux couverts sont détaillés plus bas.",
+      linkLabel: 'Voir le détail',
+      linkHref: '#tutorat',
+    },
+    {
+      title: 'Conception de site web',
+      description:
+        "Conception, développement et mise en ligne de sites web. Ce portfolio et le site de l'Académie d'Excellence Eurêka en sont deux exemples, présentés dans la section Projets.",
+    },
+    {
+      title: 'Science des données',
+      description:
+        "Analyse statistique, modélisation prédictive, tableaux de bord et automatisation de processus, du nettoyage des données jusqu'à la présentation des résultats.",
+    },
+  ],
+
   // Projets tirés de ton parcours (recherche / stages). Ajoute un `repo` GitHub si tu en publies un.
   projects: [
+    {
+      title: 'Ce portfolio',
+      description:
+        "Le site que vous regardez. Bâti avec Astro et TypeScript, avec tout le contenu réuni dans un seul fichier structuré. Sa page d'accueil est refabriquée à la demande pour afficher les avis de l'Académie, lus dans une base de données commune aux deux sites, et le site se remet en ligne tout seul à chaque modification déposée.",
+      tags: ['Astro', 'TypeScript', 'Supabase', 'Vercel'],
+      repo: 'https://github.com/landrykubwimana/portfolio',
+      // Pas de bouton « Démo » : le visiteur est déjà sur le site.
+      demo: '',
+    },
+    {
+      title: 'Écosystème automatisé pour Portfolio, CV et LinkedIn',
+      description:
+        "Le même contenu professionnel vivait à quatre endroits — CV LaTeX sur Overleaf, ce portfolio, LinkedIn, lettre de présentation — et les versions avaient déjà divergé. Un fichier de données unique est devenu la référence : chaque expérience sait sur quelles destinations elle doit paraître, et trois générateurs en tirent du LaTeX, du TypeScript et du Markdown. LinkedIn n'ouvrant pas ses modifications de profil aux particuliers, le système y produit la liste de ce qui a changé, champ par champ, à recopier.",
+      tags: ['TypeScript', 'LaTeX', 'Automatisation'],
+      // TODO Landry : dépôt public ? Si oui, coller son adresse ici pour
+      // allumer le bouton « Code ».
+      repo: '',
+      demo: '',
+    },
+    {
+      title: "Site de l'Académie d'Excellence Eurêka",
+      description:
+        "Le site de mon agence de tutorat : formulaire de demande, avis des familles, catalogue des cours par niveau, et un espace d'administration pour les élèves, les séances et la facturation. Ses avis et son catalogue de cours sont aussi synchronisés vers ce portfolio. Deux automatisations l'entourent : chaque soir, les séances du calendrier deviennent des séances à confirmer — la machine prépare, l'humain confirme ; et une sauvegarde quotidienne dont l'alerte est bâtie pour sonner d'elle-même le jour où plus rien ne tourne.",
+      tags: ['Next.js', 'Supabase', 'Automatisation'],
+      // Dépôt privé : pas de bouton « Code ».
+      repo: '',
+      // Pas de bouton « Démo » tant que la vitrine est derrière son mur
+      // « site en préparation ». Voir tutoring.url plus bas.
+      demo: '',
+    },
     {
       title: 'Sécurité des piétons — analyse spatiale',
       description:
@@ -285,8 +347,6 @@ export const profile: Profile = {
     ctaNote: 'Les demandes et les avis sont traités sur le site de l’Académie.',
 
     catalogueTitle: 'Matières et cours couverts',
-    catalogueNote:
-      'Si le cours que vous cherchez n’est pas dans la liste, n’hésitez pas à me contacter pour que j’évalue votre besoin.',
     catalogueNote:
       'Si le cours que vous cherchez n’est pas dans la liste, n’hésitez pas à me contacter pour que j’évalue votre besoin.',
 

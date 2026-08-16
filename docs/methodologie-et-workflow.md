@@ -51,7 +51,8 @@ src/
 ├── components/             # sections de la page
 │   ├── Nav.astro
 │   ├── Hero.astro
-│   ├── Tutoring.astro     # section « services » + les deux liens Eurêka
+│   ├── Services.astro     # les trois services offerts (annonce)
+│   ├── Tutoring.astro     # le tutorat en détail + les deux liens Eurêka
 │   ├── Catalogue.astro    # l'offre par niveau, lue dans la base
 │   ├── IconeMatiere.astro # les icônes de matières (mêmes qu'aeeureka)
 │   ├── Avis.astro         # les témoignages, lus dans la base
@@ -71,6 +72,7 @@ docs/                      # cette documentation
 ```mermaid
 flowchart TD
     P["src/data/profile.ts<br/>(contenu structuré)"] --> C1[Hero]
+    P --> C7[Services]
     P --> C5[Tutoring]
     P --> C2[Projects]
     P --> C3[Skills]
@@ -80,6 +82,7 @@ flowchart TD
     LIB --> AV[Avis]
     AV --> C5
     C1 --> PG[pages/index.astro]
+    C7 --> PG
     C5 --> PG
     C2 --> PG
     C3 --> PG
@@ -179,7 +182,7 @@ flowchart LR
 
 ## 7. Améliorations possibles
 
-- Ajouter les **liens de dépôts** sur les cartes de projets.
+- Ajouter les **liens de dépôts** sur les cartes de projets — commencé le 16 août 2026 : la carte du portfolio pointe vers son dépôt public.
 - Brancher un **domaine personnalisé**.
 - Remettre un bouton **« Visiter le site de l'Académie »** le jour où la vitrine d'aeeureka.com sortira de son mur « site en préparation ». L'adresse est déjà dans `profile.ts` (`tutoring.url`), simplement pas utilisée.
 

@@ -62,6 +62,7 @@
 :root[data-theme='dark'] .portrait {
   border-color: var(--line);
 }
+:root[data-theme='dark'] .service-card:hover,
 :root[data-theme='dark'] .proj-card:hover {
   border-color: #3a3550;
 }
@@ -500,6 +501,58 @@ ul {
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+/* ============================================================
+   Services
+   Mêmes cartes que les projets — même fond, même bordure, même
+   soulèvement au survol — pour que la page garde un seul vocabulaire.
+   ============================================================ */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+}
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+  border-color: #ded9ec;
+}
+.service-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+.service-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  /* Pousse le lien au bas de la carte : les cartes d'une même rangée alignent
+     alors leur lien, quelle que soit la longueur du texte. */
+  flex: 1;
+}
+.service-link {
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+}
+.service-link:hover {
+  color: var(--accent);
 }
 
 /* ============================================================
@@ -1215,6 +1268,7 @@ ul {
    Actif seulement avec JS (.js-anim) et hors prefers-reduced-motion.
    ============================================================ */
 html.js-anim .section-head,
+html.js-anim .service-card,
 html.js-anim .proj-card,
 html.js-anim .skill-group,
 html.js-anim .col-title,
@@ -1241,6 +1295,7 @@ html.js-anim .reveal-in {
 }
 @media (prefers-reduced-motion: reduce) {
   html.js-anim .section-head,
+  html.js-anim .service-card,
   html.js-anim .proj-card,
   html.js-anim .skill-group,
   html.js-anim .col-title,

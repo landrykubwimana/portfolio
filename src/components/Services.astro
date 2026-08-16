@@ -1,0 +1,32 @@
+---
+import { profile } from '../data/profile';
+---
+
+{/* Cette section annonce les trois services ; le tutorat, qui a sa propre
+    bande juste en dessous, y renvoie par un lien plutôt que de tout répéter. */}
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Collaborer</span>
+      <h2 class="section-title">Services offerts</h2>
+      <p class="section-intro">Trois façons de travailler ensemble.</p>
+    </div>
+
+    <div class="services-grid">
+      {
+        profile.services.map((s) => (
+          <article class="service-card">
+            <h3 class="service-title">{s.title}</h3>
+            <p class="service-desc">{s.description}</p>
+
+            {s.linkHref && s.linkLabel && (
+              <a class="service-link" href={s.linkHref}>
+                {s.linkLabel} <span class="arrow">→</span>
+              </a>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
