@@ -623,10 +623,18 @@ ul {
 /* ============================================================
    Skills
    ============================================================ */
+/* Colonnes typographiques plutôt qu'une grille. Les groupes n'ont pas la même
+   hauteur, et une grille aligne chaque rangée sur son élément le plus grand :
+   un groupe d'un seul élément creusait donc un trou de la hauteur d'un groupe
+   de sept. Les colonnes se remplissent et s'équilibrent d'elles-mêmes.
+   `break-inside` empêche qu'un groupe soit coupé d'une colonne à l'autre. */
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px 40px;
+  columns: 3 280px;
+  column-gap: 40px;
+}
+.skill-group {
+  break-inside: avoid;
+  margin-bottom: 30px;
 }
 .skill-group-label {
   font-family: var(--font-display);
