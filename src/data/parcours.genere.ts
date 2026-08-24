@@ -14,7 +14,7 @@
 
 import type { ExperienceItem, EducationItem, SkillGroup } from './profile';
 
-export const tagline: string = "Titulaire d'une maîtrise en science des données et analytique d'affaires (HEC Montréal) et d'un baccalauréat en mathématiques, j'occupe actuellement un poste de scientifique de données au Centre de Recherche du CHUM (CRCHUM). Je combine une base quantitative solide à une véritable expérience en service à la clientèle, en communication et en vulgarisation. Cette double force – technique et relationnelle – me permet de traduire des besoins d'affaires en analyses claires et utiles. En parallèle, je dirige une agence de tutorat (Académie d'Excellence Eurêka) où j'accompagne des étudiants en mathématiques et en sciences, ce qui entretient ma capacité à rendre accessibles des concepts complexes.";
+export const tagline: string = "Scientifique de données au Centre de Recherche du CHUM (CRCHUM), mathématicien de formation et titulaire d'une maîtrise en science des données et analytique d'affaires (HEC Montréal), je conçois des modèles de prédiction et des pipelines qui appuient des décisions concrètes. Passé par les services financiers et l'assurance, j'ai appris à traduire un besoin d'affaires en question analytique et à rendre le résultat utilisable par ceux qui doivent s'en servir. En parallèle, je dirige une agence de tutorat (Académie d'Excellence Eurêka) où j'accompagne des étudiants en mathématiques et en sciences, ce qui entretient ma capacité à rendre accessibles des concepts complexes.";
 
 export const experience: ExperienceItem[] = [
   {
@@ -60,7 +60,12 @@ export const education: EducationItem[] = [
     period: "2025",
     credential: "M. Sc. Science des données et analytique d'affaires",
     school: "HEC Montréal",
-    description: "Complété également une année de maîtrise en ingénierie financière (marchés, produits dérivés, gestion du risque).",
+  },
+  {
+    period: "2024",
+    credential: "M. Sc. Ingénierie financière — première année complétée",
+    school: "HEC Montréal",
+    description: "Marchés, produits dérivés, gestion du risque.",
   },
   {
     period: "2021",
