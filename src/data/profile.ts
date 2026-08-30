@@ -138,7 +138,7 @@ export const profile: Profile = {
   name: 'Landry Kubwimana',
   initials: 'LK',
   photo: '/photo.jpg', // vide ('') → repli sur les initiales « LK »
-  role: 'Scientifique de données, M.Sc. | Tuteur',
+  role: 'Scientifique de données, M. Sc. | Tuteur',
   tagline,
   location: 'Montréal, QC',
   available: true,
@@ -157,7 +157,7 @@ export const profile: Profile = {
     {
       title: 'Tutorat',
       description:
-        "Accompagnement en mathématiques et en sciences, du primaire à l'université, à travers l'Académie d'Excellence Eurêka. Les matières, les cours et les niveaux couverts sont détaillés plus bas.",
+        "Accompagnement en mathématiques et en sciences, du primaire à l'université, par l'entremise de l'Académie d'Excellence Eurêka. Les matières, les cours et les niveaux couverts sont détaillés plus bas.",
       linkLabel: 'Voir le détail',
       linkHref: '#tutorat',
     },
@@ -178,7 +178,7 @@ export const profile: Profile = {
     {
       title: 'Ce portfolio',
       description:
-        "Le site que vous regardez. Bâti avec Astro et TypeScript, avec tout le contenu réuni dans un seul fichier structuré. Sa page d'accueil est refabriquée à la demande pour afficher les avis de l'Académie, lus dans une base de données commune aux deux sites, et le site se remet en ligne tout seul à chaque modification déposée.",
+        "Le site que vous regardez. Bâti avec Astro et TypeScript, tout son contenu réuni dans un seul fichier structuré. Sa page d'accueil est refabriquée à la demande pour afficher les avis de l'Académie, lus dans une base de données commune aux deux sites, et le site se remet en ligne tout seul à chaque modification déposée.",
       tags: ['Astro', 'TypeScript', 'Supabase', 'Vercel'],
       repo: 'https://github.com/landrykubwimana/portfolio',
       // Pas de bouton « Démo » : le visiteur est déjà sur le site.
@@ -197,7 +197,7 @@ export const profile: Profile = {
     {
       title: "Site de l'Académie d'Excellence Eurêka",
       description:
-        "Le site de mon agence de tutorat : formulaire de demande, avis des familles, catalogue des cours par niveau, et un espace d'administration pour les élèves, les séances et la facturation. Ses avis et son catalogue de cours sont aussi synchronisés vers ce portfolio. Deux automatisations l'entourent : chaque soir, les séances du calendrier deviennent des séances à confirmer — la machine prépare, l'humain confirme ; et une sauvegarde quotidienne dont l'alerte est bâtie pour sonner d'elle-même le jour où plus rien ne tourne.",
+        "Le site de mon agence de tutorat : formulaire de demande, avis des familles, catalogue des cours par niveau et espace d'administration pour les élèves, les séances et la facturation. Ses avis et son catalogue de cours sont aussi synchronisés vers ce portfolio. Deux automatisations l'entourent : chaque soir, les séances du calendrier deviennent des séances à confirmer — la machine prépare, l'humain confirme ; et une sauvegarde quotidienne dont l'alerte est bâtie pour sonner d'elle-même le jour où plus rien ne tourne.",
       tags: ['Next.js', 'Supabase', 'Automatisation'],
       // Dépôt privé : pas de bouton « Code ».
       repo: '',
@@ -209,7 +209,7 @@ export const profile: Profile = {
       title: 'Sécurité des piétons — analyse spatiale',
       description:
         "Projet de fin de maîtrise (HEC) : analyse géospatiale des accidents impliquant des piétons aux intersections signalisées de Montréal (GLM, régressions et corrélations spatiales) pour prioriser les zones à risque et formuler des recommandations ciblées.",
-      tags: ['Python', 'Analyse spatiale', 'Machine Learning'],
+      tags: ['R', 'Analyse spatiale', 'GLM'],
       repo: '',
       demo: '',
     },
@@ -224,15 +224,15 @@ export const profile: Profile = {
     {
       title: 'Mesure de performance de portefeuille',
       description:
-        "Bourse d'excellence de recherche CRSNG (HEC) : implémentation d'une return-based style analysis et résolution d'un problème d'optimisation par backward recursion, codé en Python.",
-      tags: ['Python', 'Finance quantitative', 'Optimisation'],
+        "Bourse d'excellence de recherche CRSNG (HEC) : analyse des distributions de rendement d'un portefeuille multi-actifs (revenu fixe, devises, marchés boursiers) par estimation fréquentiste, bayésienne et heuristique, copules et réduction de dimensionnalité ; conception d'un générateur stochastique des principaux facteurs de risque.",
+      tags: ['Estimation bayésienne', 'Finance quantitative', 'Copules'],
       repo: '',
       demo: '',
     },
     {
       title: 'Approche unificatrice des équations différentielles et aux différences',
       description:
-        "Bourse d'excellence de recherche du CRSNG (1er cycle, Université de Montréal) : stage de recherche dirigé par un professeur du Département de mathématiques et de statistique, visant à développer le potentiel pour une carrière en recherche en sciences naturelles et en génie. Étude d'une approche unificatrice des théories des équations différentielles et des équations aux différences.",
+        "Bourse d'excellence de recherche du CRSNG (1er cycle, Université de Montréal) : stage de recherche dirigé par un professeur du Département de mathématiques et de statistique, visant à développer mon potentiel en vue d'une carrière en recherche en sciences naturelles et en génie. Étude d'une approche unificatrice des théories des équations différentielles et des équations aux différences.",
       tags: ['Mathématiques', 'Recherche', 'Équations différentielles'],
       repo: '',
       demo: '',
@@ -250,7 +250,7 @@ export const profile: Profile = {
     // décrit ici : le bloc « Matières et cours couverts », juste en dessous,
     // le dit en détail et à jour.
     description: [
-      'Mon histoire avec le tutorat commence tôt, avec mes petits frères et sœurs : c’est vers moi qu’ils se tournent quand quelque chose ne rentre pas. Je me découvre alors une nouvelle passion. En quatrième secondaire, ce réflexe de grand frère devient un métier : je deviens tuteur pour mon école.',
+      'Mon histoire avec le tutorat commence tôt, auprès de mes petits frères et sœurs : c’est vers moi qu’ils se tournent quand quelque chose ne rentre pas. Je me découvre alors une nouvelle passion. En quatrième secondaire, ce réflexe de grand frère devient un métier : je deviens tuteur pour mon école.',
       'Suivent des années à enseigner et à me perfectionner, dans plusieurs agences. Puis vient la pandémie : derrière les écrans, des élèves seuls devant leurs difficultés, presque sans accompagnement. Naît alors l’envie de faire autrement — ne pas seulement rattraper des notes, mais transmettre une façon de penser. C’est de là qu’est venue l’Académie d’Excellence Eurêka.',
     ],
     // Site de l'Académie. La vitrine est encore derrière un mur « site en

@@ -4,8 +4,9 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: remplace par ton vrai domaine quand tu en auras un (ex. https://landrykubwimana.com)
-  site: 'https://example.com',
+  // URL de production Vercel. Un domaine personnalisé ne remplacera pas cette
+  // adresse : il pointera dessus. Le jour venu, c'est cette ligne qu'on change.
+  site: 'https://landry-kubwimana-portfolio.vercel.app',
 
   /**
    * Adaptateur Vercel + ISR.

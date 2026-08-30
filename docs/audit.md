@@ -90,9 +90,8 @@ Le bouton « Démo » d'aeeureka reste éteint, mais **pour une autre raison qu'
 ### Site
 
 - **Les taches floues du hero débordent horizontalement** de 60 à 80 px selon la largeur d'écran (`.blob-1`, `.blob-2`). C'est masqué par `overflow-x: hidden` sur le `body`, donc invisible — mais cette propriété a des effets de bord connus (elle peut casser `position: sticky`). Antérieur à ce travail ; à assainir un jour en contenant les taches plutôt qu'en rognant la page.
-- **`site: 'https://example.com'`** dans [`astro.config.mjs`](../astro.config.mjs) : c'est encore le domaine d'exemple. Il sert aux adresses absolues et aux aperçus de partage. À remplacer par l'adresse réelle.
+- ~~`site: 'https://example.com'` dans `astro.config.mjs`.~~ Réglé le 30 août 2026 : `site` vaut désormais `https://landry-kubwimana-portfolio.vercel.app`, l'URL de production vérifiée. Le jour où un domaine personnalisé est branché, c'est cette ligne qu'on change — le domaine pointera sur Vercel, il ne le remplacera pas.
 - **Le bouton « Visiter le site de l'Académie »** reste retiré. Le 16 août 2026, `aeeureka.com` répondait par une vitrine complète (formats de cours, catalogue par niveau, parcours en trois étapes) et non plus par le mur « site en préparation » — mais Landry a précisé que le site n'est ouvert que **le temps de ses essais**. ⚠️ **Ne pas en conclure que la vitrine est lancée** : tant qu'il ne l'a pas dit, aucun lien du portfolio ne pointe vers elle, ni ici ni sur la carte de projet. L'adresse dort dans `profile.ts` (`tutoring.url`).
-- **`hero-test.html`** à la racine : fichier de travail d'une session passée, resté là. À supprimer s'il ne sert plus.
 - ~~Les projets n'ont ni lien de dépôt ni démo.~~ Réglé en partie le 16 août 2026 : la carte du portfolio porte un bouton « Code ». Les autres cartes gardent `repo` et `demo` vides — les travaux de recherche et de stage n'ont pas de dépôt public.
 
 ### Relevé en chemin (session du 16 août 2026)
