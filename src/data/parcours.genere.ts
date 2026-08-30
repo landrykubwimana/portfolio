@@ -21,7 +21,7 @@ export const experience: ExperienceItem[] = [
     period: "2026 — Aujourd'hui",
     role: "Scientifique de données",
     org: "Centre de Recherche du CHUM (CRCHUM)",
-    description: "Analyses statistiques pour les directions du CHUM, pipelines ETL, modèles de prédiction et tableaux de bord Power BI ; automatisation de processus et recours à l'IA générative (Microsoft Copilot) ; animation de formations sur la culture des données.",
+    description: "Analyses statistiques pour les directions du CHUM, pipelines ETL, modèles de prédiction des admissions et des congés (analyse de survie, modèles longitudinaux, séries chronologiques) et tableaux de bord Power BI ; automatisation de processus et recours à l'IA générative (Microsoft Copilot) ; animation de formations sur la culture des données.",
   },
   {
     period: "2020 — Aujourd'hui",
@@ -45,13 +45,13 @@ export const experience: ExperienceItem[] = [
     period: "2025",
     role: "Stagiaire en science des données",
     org: "HEC Montréal",
-    description: "Analyse spatiale de la sécurité des piétons aux intersections de Montréal ; modélisation prédictive et visualisation géospatiale (GLM, régressions spatiales).",
+    description: "Analyse spatiale de la sécurité des piétons aux intersections signalisées de Montréal : modèles linéaires généralisés sur données de comptage, régressions spatiales et pipeline analytique complet en R.",
   },
   {
-    period: "2024",
+    period: "2024 — 2025",
     role: "Analyste de la logistique scolaire",
     org: "Solutions Informatiques Dash (Dash)",
-    description: "Conception et optimisation des horaires-maîtres d'écoles secondaires sous contraintes académiques ; validation de données scolaires et support technique aux directions.",
+    description: "Optimisation sous contraintes des horaires-maîtres d'écoles secondaires ; analyse des besoins, validation de données scolaires et support technique aux directions.",
   },
 ];
 
@@ -81,28 +81,24 @@ export const education: EducationItem[] = [
 
 export const skills: SkillGroup[] = [
   {
-    label: "Langages & programmation",
-    items: ["Python (pandas, NumPy, scikit-learn)", "R", "SQL", "C", "MATLAB", "Mathematica", "LaTeX"],
+    label: "Langages & outils",
+    items: ["Python", "R", "SQL (PostgreSQL, Oracle)", "C", "LaTeX", "Git (GitHub, GitLab)"],
   },
   {
-    label: "Méthodes & modélisation",
-    items: ["Apprentissage automatique", "Modélisation prédictive", "Statistiques appliquées", "GLM", "Clustering", "Analyse spatiale", "Pipelines ETL"],
+    label: "Données, décisionnel & cloud",
+    items: ["Power BI (DAX, Power Query)", "Microsoft Fabric", "Azure Databricks (PySpark)", "SAS", "DBeaver", "AWS", "Azure DevOps", "Microsoft 365", "Google Workspace", "Spordle"],
+  },
+  {
+    label: "Calcul scientifique & optimisation",
+    items: ["MATLAB", "Mathematica", "IBM ILOG CPLEX"],
   },
   {
     label: "IA générative & automatisation",
-    items: ["IA générative", "Automatisation de processus", "Microsoft Copilot", "Google Gemini", "Claude"],
+    items: ["Microsoft Copilot", "Google Gemini", "Claude", "ChatGPT", "Power Automate"],
   },
   {
-    label: "Données, BI & modélisation",
-    items: ["Power BI", "Microsoft Fabric", "SAS", "IBM ILOG CPLEX"],
-  },
-  {
-    label: "Cloud & DevOps",
-    items: ["AWS", "Azure DevOps", "GitHub", "GitLab"],
-  },
-  {
-    label: "Web & bureautique",
-    items: ["HTML", "WordPress", "Microsoft 365", "Google Workspace"],
+    label: "Domaines",
+    items: ["Santé et systèmes hospitaliers", "Assurance de dommages", "Services financiers", "Éducation"],
   },
   {
     label: "Langues",
