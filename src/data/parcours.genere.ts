@@ -53,6 +53,12 @@ export const experience: ExperienceItem[] = [
     org: "Solutions Informatiques Dash (Dash)",
     description: "Optimisation sous contraintes des horaires-maîtres d'écoles secondaires ; analyse des besoins, validation de données scolaires et support technique aux directions.",
   },
+  {
+    period: "2023 — 2024",
+    role: "Agent en assurance de dommages",
+    org: "Desjardins",
+    description: "Analyse des besoins en assurance auto et habitation, soumissions complètes et vulgarisation de notions techniques auprès d'un public non spécialiste, en français et en anglais.",
+  },
 ];
 
 export const education: EducationItem[] = [
