@@ -21,7 +21,7 @@ export const experience: ExperienceItem[] = [
     period: "2026 — Aujourd'hui",
     role: "Scientifique de données",
     org: "Centre de recherche du CHUM (CRCHUM)",
-    description: "Analyses statistiques pour les directions du CHUM, pipelines ETL, modèles de prédiction des admissions et des congés (analyse de survie, modèles longitudinaux, séries chronologiques) et tableaux de bord Power BI ; automatisation de processus et recours à l'IA générative (Microsoft Copilot) ; animation de formations sur la culture des données.",
+    description: "Analyses statistiques pour les directions du CHUM, extraction par requêtes SQL et pipelines ETL, modèles de prédiction des admissions et des congés développés en Python (analyse de survie, modèles longitudinaux, séries chronologiques) et tableaux de bord Power BI ; automatisation de processus et recours à l'IA générative (Microsoft Copilot) ; animation de formations sur la culture des données.",
   },
   {
     period: "2020 — Aujourd'hui",
@@ -30,7 +30,7 @@ export const experience: ExperienceItem[] = [
     description: "Direction de mon agence de tutorat : aide aux devoirs en maths et sciences, coordination et assignation des demandes aux tuteurs, gestion des finances et des salaires.",
   },
   {
-    period: "2026 — Aujourd'hui",
+    period: "2026",
     role: "Adjoint administratif",
     org: "Club de Soccer Mont-Royal Outremont (CS MRO)",
     description: "Service à la clientèle de première ligne (téléphone, courriels, accueil) et soutien à l'équipe administrative ; conception et maintenance d'une base de données (inscriptions, paiements, masse salariale) et automatisation de processus — avec l'appui de l'IA générative (Google Gemini) — pour réduire les tâches manuelles et gagner en efficacité.",
@@ -39,7 +39,7 @@ export const experience: ExperienceItem[] = [
     period: "2025",
     role: "Stagiaire analyste de données",
     org: "iA Groupe financier",
-    description: "Approche de householding par regroupement probabiliste et clustering ; nettoyage et transformation de jeux de données complexes ; communication des résultats aux parties prenantes.",
+    description: "Approche de householding en Python par regroupement probabiliste et clustering ; nettoyage et transformation de jeux de données complexes ; communication des résultats aux parties prenantes.",
   },
   {
     period: "2025",
