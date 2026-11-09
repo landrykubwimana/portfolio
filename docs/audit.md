@@ -65,6 +65,45 @@ Le bouton « Démo » d'aeeureka reste éteint, mais **pour une autre raison qu'
 
 **Le dépôt de l'écosystème** : public ou privé ? Si public, coller son adresse dans `repo` allume le bouton « Code » tout seul. Un `TODO` le rappelle dans `profile.ts`.
 
+### 6. Refonte visuelle « Graphite et mauve » — branche `refonte-graphite-mauve`, 8 novembre 2026
+
+Choisie par Landry sur aperçus, en trois tours, après une recherche web et deux tours de critique. Les décisions, pour qu'on n'ait pas à les rejouer :
+
+- **Base Graphite** : gris neutres, tuiles nettement détachées du fond (environ 1,2:1, contre 1,04:1 avant), filet de 1 px.
+- **Le mauve reste, en aplat** (#5b4be6 en clair, #9d8dff en sombre) et sert d'accent : prénom, liens, petits mots au-dessus des titres, icônes, étiquettes, « Faire une demande ». Plus aucun dégradé ni tache floue.
+- **Police du système** : SF Pro sur les appareils Apple, Inter ailleurs. Space Grotesk n'est plus chargée.
+- **Le rendu d'origine est gardé** : barre pleine largeur sans arrondi, pastilles et contours, ombre au survol. Un rendu « verre liquide » (barre en îlot, capsules translucides) a été essayé et écarté.
+- **Halo qui suit la souris sur les cartes**, sur le contour et à l'intérieur : gardé à la demande de Landry, même si la critique le range parmi les effets de gabarit.
+- **Badges en capsules**, à cheval sur le bord de la photo, qui flottent. **Monogramme LK rond.**
+- **« Disponible pour du tutorat » masqué** : `available: false` dans `profile.ts`, le libellé reste.
+- **Sur téléphone, les sections passent dans la barre du haut**, sur une seconde ligne qui reste seule quand on lit vers le bas. Pas de barre en bas de l'écran : Safari a déjà la sienne sur iPhone.
+- **Pied de page centré** sur téléphone en mode portrait, à la demande de Landry après essai sur iPhone. À partir de 561 px, il reste sur une seule ligne.
+- **Ordre des sections inchangé.**
+- **Effets discrets** : pastille de la section en cours dans la barre, bascule de thème qui s'ouvre en cercle, boutons qui s'enfoncent à l'appui, méandre et laurier qui se dessinent au défilement (Safari 26 et Chrome ; immobiles ailleurs).
+- **Mise en page** : projets en grille 3 + 2 × 2 (plus de carte orpheline), compétences en tuiles deux par deux, formation qui reste à l'écran pendant la lecture de l'expérience, petits mots au-dessus des titres en casse normale (même texte).
+- **Corrigé en passant** : la barre et le héros commençaient 32 px plus à gauche que le reste de la page, parce que leur `padding` effaçait celui de `.wrap`.
+
+**Vérifiée dans le moteur de Safari (WebKit), avec les vraies données, le 8 novembre 2026.** Contenu identique au site en ligne, à « Disponible pour du tutorat » près. Défauts trouvés, puis corrigés sur la branche :
+
+- **Rangée du téléphone** : plus de section marquée en haut de page ni sur la maxime ; la première ligne s'efface aussi en défilant lentement ; le haut de la bande tutorat ne passe plus sous la barre.
+- **Cercle du thème** : les transitions de couleur sont coupées pendant la bascule, le cercle ne montre plus de page grise.
+- **Moins de 375 px** (iPhone SE de 1re génération, zoom de l'affichage) : la barre se resserre sans rien retirer, au choix de Landry sur aperçu. À 320 px, le nom ne passe plus sous le bouton de thème et « Parcours » tient entier.
+- **Liens de la barre, en thème clair** : un cran plus foncés (#4a4a50) pour rester lisibles quand la bande sombre passe dessous, 4,9:1 au lieu de 4,1:1 (mesuré avec le flou), au choix de Landry sur aperçu. La transparence de la barre ne change pas.
+- **Typographie française à l'affichage** (`src/lib/typo.ts`), au choix de Landry sur aperçu : apostrophes courbes et espaces insécables devant `: ; ? !` et dans les guillemets. Les sources (`profile.ts`, parcours généré, base commune) ne changent pas, aucun mot non plus. Les avis des familles n'y passent pas. Ce qui est écrit en dur dans les composants porte directement les bons caractères.
+- **De 901 à 960 px** : le nom reste sur une ligne dans la barre.
+- **« Savoir-faire »** : 4,40:1 sur le fond alterné ; ce seul mot passe à #5848e0 (4,62:1) en thème clair.
+- **Clavier et lecteurs d'écran** : anneaux de focus entiers et lisibles, plus de saut de page dans Safari quand un élément de la barre réduite reçoit le focus au clavier, rangée nommée « Navigation principale ».
+- **Méandre et laurier à la compilation** : la compilation fusionnait `animation` et `animation-timeline` en un raccourci que Safari rejette ; ces animations n'auraient existé qu'en développement. Écrites en propriétés détaillées.
+- **Déjà sur le site en ligne, corrigé aussi** : la bande tutorat restait invisible sur un écran peu haut (téléphone à l'horizontale, zoom de page), faute de pouvoir montrer 12 % de sa surface ; cartes d'avis et de services rognées ou décentrées sous 400 px ; bouton Fermer de la lettre emporté par le défilement ; badge « Montréal, QC » rogné de 2 px vers 1180 px ; filigrane sélectionnable dans Safari ; effets de survol réservés aux appareils qui en ont un, pour qu'une carte touchée sur iPhone ne reste pas soulevée.
+
+**Restés ouverts :**
+
+- **Lettre complète sur téléphone** : comme Fermer reste en place, la fin de certaines lignes passe dessous en défilant. Une marge à droite l'éviterait, au prix de lignes plus courtes : choix visuel.
+- **Compilation sans cible de navigateur** : Astro compile le CSS pour les navigateurs les plus récents. Avant Safari et iOS 16.4, les requêtes `(width<=…)` sont inconnues et la mise en page téléphone ne s'applique pas ; avant 18.0, la barre perd son flou. Déjà le cas sur le site en ligne. Un réglage `vite.build.cssTarget` (Safari 15 et plus) a été essayé sur une copie le 8 novembre 2026 : 72 octets compressés de plus, rendu identique sur appareil récent. **Landry a choisi de laisser tel quel.** À ne reproposer que sur un fait nouveau.
+- **Paquet `@fontsource-variable/space-grotesk`** : il n'est plus importé mais reste dans `package.json`. Le retirer touche aux dépendances : décision de Landry.
+- **Services et avis en 2 + 1** sur les largeurs intermédiaires (iPad), comme sur le site en ligne : rien n'est cassé ; une autre disposition se montrerait sur aperçu.
+- **Idées de la veille du 7 novembre 2026** (section Contact, aperçu de partage, rôle et résultat par projet, etc.) : à reprendre une à une.
+
 ---
 
 ## Relevé en chemin (session du 10 août 2026)
@@ -89,7 +128,7 @@ Le bouton « Démo » d'aeeureka reste éteint, mais **pour une autre raison qu'
 
 ### Site
 
-- **Les taches floues du hero débordent horizontalement** de 60 à 80 px selon la largeur d'écran (`.blob-1`, `.blob-2`). C'est masqué par `overflow-x: hidden` sur le `body`, donc invisible — mais cette propriété a des effets de bord connus (elle peut casser `position: sticky`). Antérieur à ce travail ; à assainir un jour en contenant les taches plutôt qu'en rognant la page.
+- ~~**Les taches floues du hero débordent horizontalement.**~~ Réglé le 8 novembre 2026 (point 6) : les taches sont retirées, et le `body` passe à `overflow-x: clip`, qui rogne sans casser `position: sticky`.
 - ~~`site: 'https://example.com'` dans `astro.config.mjs`.~~ Réglé le 30 août 2026 : `site` vaut désormais `https://landry-kubwimana-portfolio.vercel.app`, l'URL de production vérifiée. Le jour où un domaine personnalisé est branché, c'est cette ligne qu'on change — le domaine pointera sur Vercel, il ne le remplacera pas.
 - **Le bouton « Visiter le site de l'Académie »** reste retiré. Le 16 août 2026, `aeeureka.com` répondait par une vitrine complète (formats de cours, catalogue par niveau, parcours en trois étapes) et non plus par le mur « site en préparation » — mais Landry a précisé que le site n'est ouvert que **le temps de ses essais**. ⚠️ **Ne pas en conclure que la vitrine est lancée** : tant qu'il ne l'a pas dit, aucun lien du portfolio ne pointe vers elle, ni ici ni sur la carte de projet. L'adresse dort dans `profile.ts` (`tutoring.url`).
 - ~~Les projets n'ont ni lien de dépôt ni démo.~~ Réglé en partie le 16 août 2026 : la carte du portfolio porte un bouton « Code ». Les autres cartes gardent `repo` et `demo` vides — les travaux de recherche et de stage n'ont pas de dépôt public.
@@ -98,7 +137,7 @@ Le bouton « Démo » d'aeeureka reste éteint, mais **pour une autre raison qu'
 
 - **`npm run build` ne vérifie pas les types.** Le champ `catalogueNote` était écrit deux fois dans `profile.ts` — dans la description de structure et dans le contenu — et le site se construisait quand même sans un mot. Le doublon a été supprimé le 16 août. L'outil qui l'aurait signalé (`astro check`) n'est pas installé dans le projet ; l'ajouter est une décision de Landry, elle touche aux dépendances.
 - **La hauteur de la première rangée de projets, réglée en deux temps.** Elle est montée à 608 px (contre 358 px pour la rangée suivante) parce que la grille aligne les cartes sur la plus haute. Raccourcir la seule description de l'écosystème n'a rendu que 24 px : celle d'aeeureka avait grossi en accueillant ses automatisations et commandait à son tour. Les deux ramenées autour de 82 mots, la rangée est descendue à 488 px, puis remontée à **512 px** quand la carte d'aeeureka a repris deux mots. Règle à retenir pour la suite : dans cette grille, c'est toujours la carte la plus bavarde qui décide, donc on la raccourcit elle, pas ses voisines — et quelques mots ajoutés à la mauvaise carte se paient en dizaines de pixels sur toute la rangée.
-- **Le menu du haut n'existe pas sur téléphone** (`.nav-links` est en `display: none` sous une certaine largeur, et il n'y a pas de menu de remplacement). L'entrée « Services » ajoutée au menu n'y change rien, mais ça veut dire qu'un visiteur sur téléphone n'a que les pastilles du hero pour naviguer. Antérieur à ce travail.
+- ~~**Le menu du haut n'existe pas sur téléphone.**~~ Réglé le 8 novembre 2026 (point 6) : sous 900 px, les cinq sections passent sur une seconde ligne de la barre du haut.
 - **Un serveur de développement tournait déjà sur le port 4321** pendant la session ; j'ai regardé la page rendue par celui-là plutôt que d'en lancer un second. Le panneau navigateur composait des images périmées : les vérifications ont été faites par mesure dans la page, pas à l'œil. **Le rendu visuel reste à valider par Landry.**
 
 ### Vercel

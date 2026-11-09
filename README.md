@@ -37,6 +37,7 @@ src/
 ├── lib/supabase.ts        # LA connexion à la base (un seul endroit)
 ├── lib/avis.ts            # lecture des avis + libellés des cartes
 ├── lib/catalogue.ts       # lecture de l'offre par niveau
+├── lib/typo.ts            # typographie française, posée à l'affichage
 ├── styles/global.css      # système de design (couleurs, typo, composants)
 ├── layouts/Base.astro     # coquille HTML, polices, métadonnées SEO
 ├── components/             # sections de la page
@@ -111,7 +112,7 @@ Pour la méthodologie, l'architecture et le workflow complet, voir [`docs/method
 
 ## Polices
 
-Auto-hébergées via `@fontsource-variable` (Space Grotesk + Inter) — aucune requête vers un CDN externe.
+La police du système : SF Pro sur les appareils Apple, comme sur aeeureka. Ailleurs, Inter, auto-hébergée via `@fontsource-variable` — aucune requête vers un CDN externe.
 
 ## À faire (placeholders)
 

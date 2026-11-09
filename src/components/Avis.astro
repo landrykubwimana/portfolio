@@ -47,13 +47,8 @@ const VISIBLES = 3;
 
               {a.texteComplet.length > 0 && (
                 <dialog class="avis-dialog" id={`avis-${a.id}`} aria-labelledby={`avis-${a.id}-nom`}>
-                  <div class="avis-dialog-inner">
-                    <button class="avis-close" type="button" data-avis-close aria-label="Fermer">
-                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                        <path d="M18 6 6 18M6 6l12 12" />
-                      </svg>
-                    </button>
-
+                  {/* Le focus entre dans la lettre à l'ouverture : les flèches du clavier la font défiler. */}
+                  <div class="avis-dialog-inner" tabindex="-1" autofocus>
                     <h4 class="avis-dialog-nom" id={`avis-${a.id}-nom`}>
                       {a.nom}
                     </h4>
@@ -67,6 +62,13 @@ const VISIBLES = 3;
 
                     {a.mention && <p class="avis-mention">{a.mention}</p>}
                   </div>
+
+                  {/* Hors de la zone qui défile : le bouton reste visible pendant la lecture. */}
+                  <button class="avis-close" type="button" data-avis-close aria-label="Fermer">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                  </button>
                 </dialog>
               )}
             </article>
@@ -93,6 +95,8 @@ const VISIBLES = 3;
         if (!boite) return;
         if (typeof boite.showModal === 'function') boite.showModal();
         else boite.setAttribute('open', '');
+        // Une lettre rouverte repart du début.
+        boite.querySelector('.avis-dialog-inner')?.scrollTo(0, 0);
       });
     });
 

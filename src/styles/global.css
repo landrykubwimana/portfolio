@@ -1,73 +1,122 @@
 /* ============================================================
-   Design tokens
+   Jetons de design — Graphite et mauve (refonte du 8 novembre 2026)
+
+   Des gris neutres, et des tuiles nettement plus claires que le fond
+   (ou plus claires que le noir), bordées d'un filet de 1 px. Le mauve
+   du site d'origine tient le rôle d'accent, en aplat, jamais en
+   dégradé : prénom, liens, petits mots au-dessus des titres, icônes,
+   étiquettes, bouton « Faire une demande ».
    ============================================================ */
 :root {
-  --bg: #fbfaf8;
-  --surface: #ffffff;
-  --surface-2: #f6f4ef;
-  --ink: #14131a;
-  --muted: #66646f;
-  --line: #eceae4;
-  --accent: #5b4be6;
-  --accent-2: #9b5de5;
-  --grad: linear-gradient(135deg, #6d5ef6 0%, #a855f7 100%);
-  --grad-soft: linear-gradient(160deg, #efe9ff 0%, #f7edff 55%, #fdeaf5 100%);
-
-  --font-display: 'Space Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* SF Pro sur les appareils Apple (la même police que sur aeeureka) ;
+     Inter, auto-hébergée, ailleurs. */
+  --font-sys: -apple-system, BlinkMacSystemFont, 'Inter Variable', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font-sys);
+  --font-body: var(--font-sys);
   /* Registre classique : le grec en filigrane et la maxime. C'est la serif du
      système — la même pile que sur aeeureka, et rien à télécharger. */
   --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
-  --radius: 16px;
-  --radius-lg: 24px;
+  /* Titres réglés comme chez Apple : demi-gras, approche à peine resserrée
+     aux grandes tailles, légèrement ouverte autour de 20 à 28 px. */
+  --title-weight: 600;
+  --hero-track: -0.015em;
+  --title-track: -0.005em;
+  --tile-title-track: 0.009em;
+
+  --radius: 22px;
+  --radius-lg: 32px;
+  --container: 1180px;
+  --section-pad: 104px;
+
+  /* Graphite, clair */
+  --bg: #e9e9ec;
+  --bg-alt: #dfdfe3;
+  --surface: #ffffff;
+  --surface-2: #f2f2f4;
+  --ink: #0c0c0e;
+  --ink-2: #55555c;
+  --ink-3: #85858d;
+  --line: rgba(0, 0, 0, 0.12);
+  --line-strong: rgba(0, 0, 0, 0.22);
+  --nav-bg: rgba(233, 233, 236, 0.8);
+  /* Un cran plus foncé que --ink-2 : les liens de la barre restent lisibles
+     quand la bande sombre passe dessous. */
+  --nav-lien: #4a4a50;
   --shadow: 0 1px 2px rgba(20, 19, 26, 0.04), 0 12px 32px -12px rgba(20, 19, 26, 0.14);
   --shadow-sm: 0 1px 2px rgba(20, 19, 26, 0.05), 0 6px 18px -10px rgba(20, 19, 26, 0.16);
-  --container: 1180px;
+  --cta-bg: #0c0c0e;
+  --cta-ink: #ffffff;
+
+  /* Le mauve, en aplat. */
+  --mauve: #5b4be6;
+  --mauve-doux: rgba(91, 75, 230, 0.1);
+  --mark-bg: #6d5ef6;
+  --mark-ink: #ffffff;
+  --accent: var(--mauve);
+
+  /* Halo qui suit la souris sur les cartes : le filet, et une lueur à
+     l'intérieur. */
+  --halo-rim: rgba(0, 0, 0, 0.3);
+  --halo-in: rgba(0, 0, 0, 0.03);
+
+  /* La bande tutorat reste sombre dans les deux thèmes. */
+  --band-bg: #0c0c0e;
+  --band-border: transparent;
+  --band-surface: rgba(255, 255, 255, 0.08);
+  --band-ink: #f4f4f6;
+  --band-ink-2: rgba(244, 244, 246, 0.74);
+  --band-ink-3: rgba(244, 244, 246, 0.56);
+  --band-line: rgba(255, 255, 255, 0.14);
+  --band-accent: #c6b4ff;
+  --band-cta-bg: #6d5ef6;
+  --band-cta-ink: #ffffff;
+  --band-grec: rgba(255, 255, 255, 0.1);
+  --band-halo-rim: rgba(255, 255, 255, 0.5);
+  --band-halo-in: rgba(255, 255, 255, 0.05);
+
   color-scheme: light;
 }
 
 /* ============================================================
-   Dark theme — appliqué quand <html data-theme="dark">
+   Thème sombre — appliqué quand <html data-theme="dark">
    (posé par un script inline dans le <head>, donc sans flash au chargement)
    ============================================================ */
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #100e17;
-  --surface: #1a1824;
-  --surface-2: #15131d;
-  --ink: #f1eff7;
-  --muted: #a5a0b4;
-  --line: #2b2838;
-  --accent: #9d8dff;
-  --accent-2: #bd85f0;
-  --grad: linear-gradient(135deg, #7d6ef7 0%, #b06cf8 100%);
-  --grad-soft: linear-gradient(160deg, #221b37 0%, #281d3c 55%, #311f3a 100%);
+  --bg: #08080a;
+  --bg-alt: #111114;
+  --surface: #1e1e22;
+  --surface-2: #2a2a2f;
+  --ink: #f4f4f6;
+  --ink-2: #a4a4ad;
+  --ink-3: #7b7b85;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --nav-bg: rgba(8, 8, 10, 0.82);
+  --nav-lien: var(--ink-2);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -12px rgba(0, 0, 0, 0.7);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 18px -10px rgba(0, 0, 0, 0.75);
+  --cta-bg: #f4f4f6;
+  --cta-ink: #0c0c0e;
+  --mauve: #9d8dff;
+  --mauve-doux: rgba(157, 141, 255, 0.14);
+  --halo-rim: rgba(255, 255, 255, 0.5);
+  --halo-in: rgba(255, 255, 255, 0.05);
+  --band-bg: #17171a;
+  --band-border: rgba(255, 255, 255, 0.12);
 }
 
-/* Surcharges ciblées : couleurs qui étaient codées en dur */
-:root[data-theme='dark'] .site-nav {
-  background: rgba(16, 14, 23, 0.82);
-}
-:root[data-theme='dark'] .btn-primary {
-  color: var(--bg); /* texte sombre sur le bouton clair (--ink inversé) */
-}
-:root[data-theme='dark'] .pill {
-  color: #71dd97;
-  background: rgba(55, 181, 89, 0.12);
-  border-color: rgba(55, 181, 89, 0.3);
-}
-:root[data-theme='dark'] .portrait {
-  border-color: var(--line);
-}
-:root[data-theme='dark'] .service-card:hover,
-:root[data-theme='dark'] .proj-card:hover {
-  border-color: #3a3550;
-}
-:root[data-theme='dark'] .blob {
-  opacity: 0.26;
+/* Contraste renforcé (réglage du système) : filets et contours plus nets. */
+@media (prefers-contrast: more) {
+  :root {
+    --line: color-mix(in srgb, var(--ink) 28%, transparent) !important;
+    --line-strong: color-mix(in srgb, var(--ink) 55%, transparent) !important;
+    --ink-2: color-mix(in srgb, var(--ink) 82%, var(--bg)) !important;
+    --ink-3: var(--ink-2) !important;
+    --nav-lien: var(--ink-2) !important;
+    --band-ink-3: var(--band-ink-2) !important;
+  }
 }
 
 /* ============================================================
@@ -84,15 +133,20 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
+  scroll-padding-top: 96px;
 }
 body {
   font-family: var(--font-body);
+  font-size: 17px;
+  letter-spacing: -0.016em;
   color: var(--ink);
   background: var(--bg);
-  line-height: 1.6;
+  line-height: 1.5;
   min-height: 100vh;
-  overflow-x: hidden;
+  /* `clip` et non `hidden` : rogne sans créer de zone de défilement, donc sans
+     casser `position: sticky` (point relevé dans docs/audit.md). */
+  overflow-x: clip;
+  transition: background-color 0.3s ease;
 }
 a {
   color: inherit;
@@ -108,54 +162,142 @@ ul {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
+}
+/* Dans la bande toujours sombre, l'anneau prend la couleur claire de la bande. */
+.tutoring :focus-visible {
+  outline-color: var(--band-accent);
+}
+/* La fenêtre de lecture est posée dans la bande, mais son fond suit le thème. */
+.avis-dialog :focus-visible {
+  outline-color: var(--accent);
 }
 
 /* ============================================================
-   Layout helpers
+   Mise en page
    ============================================================ */
+/* Retrait latéral seulement (`padding-inline`) : un `padding` complet posé
+   ailleurs sur le même élément (héros, barre) l'effaçait, d'où un décalage de
+   32 px entre le haut de la page et les sections. */
 .wrap {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 32px;
+  padding-inline: 32px;
   position: relative;
   z-index: 2;
 }
 .section {
-  padding: 96px 0;
+  padding: var(--section-pad) 0;
   position: relative;
 }
 .section-alt {
-  background: var(--surface-2);
+  background: var(--bg-alt);
 }
 .section-head {
-  max-width: 640px;
-  margin-bottom: 48px;
+  max-width: 720px;
+  margin-bottom: 56px;
 }
+/* Petit mot au-dessus des titres : en casse normale, comme sur les pages
+   d'Apple, plutôt qu'en capitales espacées. Le texte ne change pas. */
 .eyebrow {
   display: inline-block;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: -0.022em;
   color: var(--accent);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+}
+/* En clair, sur le fond alterné, le mauve tomberait sous le contraste minimal
+   (4,40:1) : ce seul mot fonce d'un cheveu. */
+.section-alt .eyebrow {
+  color: #5848e0;
+}
+:root[data-theme='dark'] .section-alt .eyebrow {
+  color: var(--accent);
 }
 .section-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: clamp(30px, 4vw, 42px);
-  line-height: 1.1;
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-track);
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.07;
+  text-wrap: balance;
 }
 .section-intro {
-  font-size: 17px;
-  color: var(--muted);
-  margin-top: 14px;
+  font-size: 19px;
+  line-height: 1.47;
+  letter-spacing: 0.012em;
+  color: var(--ink-2);
+  margin-top: 16px;
 }
 
 /* ============================================================
-   Buttons
+   Halo qui suit la souris sur les cartes : le filet s'éclaire près
+   du curseur, et une lueur douce le suit à l'intérieur. Le dégradé
+   du filet n'est peint que dans l'épaisseur de la bordure (masque) ;
+   la lueur passe sous le texte.
+   ============================================================ */
+.service-card,
+.proj-card,
+.avis-card,
+.skill-group {
+  position: relative;
+  isolation: isolate;
+}
+.service-card::before,
+.proj-card::before,
+.avis-card::before,
+.skill-group::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--halo-rim), transparent 65%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.service-card::after,
+.proj-card::after,
+.avis-card::after,
+.skill-group::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--halo-in), transparent 62%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.avis-card::before {
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--band-halo-rim), transparent 65%);
+}
+.avis-card::after {
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--band-halo-in), transparent 62%);
+}
+@media (hover: hover) {
+  :is(.service-card, .proj-card, .avis-card, .skill-group):hover::before,
+  :is(.service-card, .proj-card, .avis-card, .skill-group):hover::after {
+    opacity: 1;
+  }
+}
+
+/* Enfoncement bref à l'appui, comme une commande d'iOS : le mouvement est
+   réservé à ce qui se clique. */
+:is(.btn, .chip, .theme-toggle, .nav-rangee a):active {
+  transform: scale(0.97);
+  transition-duration: 0.08s;
+}
+
+/* ============================================================
+   Boutons
    ============================================================ */
 /* Tous les boutons du site sont des ovales, et tous à la même mesure que le
    bouton « Faire une demande » d'aeeureka : 44 px de haut, texte de 14 px en
@@ -166,19 +308,20 @@ ul {
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
+  letter-spacing: -0.01em;
   cursor: pointer;
   border-radius: 999px;
   padding: 11px 23px;
   border: 1px solid transparent;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   white-space: nowrap;
 }
 .btn-primary {
-  background: var(--ink);
-  color: #fff;
+  background: var(--cta-bg);
+  color: var(--cta-ink);
 }
 .btn-primary:hover {
   transform: translateY(-1px);
@@ -193,9 +336,10 @@ ul {
   border-color: var(--ink);
   transform: translateY(-1px);
 }
+/* « Faire une demande » : le mauve en aplat, là où le site avait un dégradé. */
 .btn-accent {
-  background: var(--grad);
-  color: #fff;
+  background: var(--band-cta-bg);
+  color: var(--band-cta-ink);
 }
 .btn-accent:hover {
   transform: translateY(-1px);
@@ -210,56 +354,84 @@ ul {
 }
 
 /* ============================================================
-   Navigation
+   Navigation — pleine largeur, collée en haut, translucide et
+   floutée.
    ============================================================ */
 .site-nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(251, 250, 248, 0.8);
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
   backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .site-nav .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
+  column-gap: 12px;
+  padding-block: 18px;
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 11px;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 17px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.022em;
 }
+/* Le monogramme : un rond mauve, en aplat. */
 .mark {
+  flex: none;
   width: 34px;
   height: 34px;
-  border-radius: 9px;
-  background: var(--grad);
+  border-radius: 50%;
+  background: var(--mark-bg);
+  color: var(--mark-ink);
   display: grid;
   place-items: center;
-  color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  box-shadow: 0 6px 16px -6px rgba(107, 94, 246, 0.7);
+  letter-spacing: -0.02em;
+  box-shadow: 0 6px 16px -8px rgba(107, 94, 246, 0.6);
 }
 .nav-links {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 4px;
+}
+/* Pastille qui glisse sous le lien de la section en cours, comme la sélection
+   des barres d'onglets d'iPadOS. Invisible en haut de page. */
+.nav-pastille {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--w, 0px);
+  height: 34px;
+  transform: translate(var(--x, 0px), -50%);
+  border-radius: 999px;
+  background: var(--mauve-doux);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.2s ease;
+}
+.nav-pastille.est-visible {
+  opacity: 1;
 }
 .nav-link {
+  position: relative;
+  padding: 7px 14px;
   font-size: 14.5px;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--nav-lien);
   transition: color 0.18s ease;
 }
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.est-actif {
   color: var(--ink);
 }
 /* Le bouton de la barre de navigation suit la mesure commune : voir `.btn`. */
@@ -280,7 +452,7 @@ ul {
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 .theme-toggle:hover {
   border-color: var(--accent);
@@ -299,49 +471,21 @@ ul {
 :root[data-theme='dark'] .theme-toggle .icon-sun {
   display: block;
 }
-
-/* ============================================================
-   Decorative blobs
-   ============================================================ */
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.5;
-  z-index: 0;
-  pointer-events: none;
-}
-.blob-1 {
-  width: 520px;
-  height: 520px;
-  background: radial-gradient(circle, #c9b8ff, transparent 68%);
-  top: -160px;
-  right: -120px;
-  animation: drift 16s ease-in-out infinite;
-}
-.blob-2 {
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle, #ffd6ef, transparent 68%);
-  bottom: -220px;
-  left: -160px;
-  animation: drift 20s ease-in-out infinite reverse;
-}
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-30px, 30px); }
+/* La rangée des sections n'existe que sur téléphone : voir la fin du fichier. */
+.nav-rangee {
+  display: none;
 }
 
 /* ============================================================
-   Hero
+   Héros
    ============================================================ */
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: 56px;
   align-items: center;
-  padding: 84px 0 96px;
+  padding-block: 72px 56px;
 }
 .pill {
   display: inline-flex;
@@ -349,52 +493,45 @@ ul {
   gap: 9px;
   font-size: 13.5px;
   font-weight: 500;
-  color: #3f7a52;
-  background: #ecf7ef;
-  border: 1px solid #d6ecda;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
   padding: 7px 14px;
   border-radius: 100px;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
 }
 .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #37b559;
-  box-shadow: 0 0 0 0 rgba(55, 181, 89, 0.55);
-  animation: pulse 2.4s infinite;
+  background: #30d158;
 }
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(55, 181, 89, 0.55); }
-  70% { box-shadow: 0 0 0 8px rgba(55, 181, 89, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(55, 181, 89, 0); }
-}
+/* Le prénom garde son mauve, en aplat : plus de dégradé dans le texte. */
 .hero-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.02;
-  font-size: clamp(44px, 6.4vw, 82px);
-  margin-bottom: 22px;
+  font-weight: var(--title-weight);
+  letter-spacing: var(--hero-track);
+  line-height: 1.05;
+  font-size: clamp(46px, 6.2vw, 80px);
+  margin-bottom: 26px;
+  text-wrap: balance;
 }
 .accent {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--mauve);
 }
 .role {
-  font-size: 20px;
-  font-weight: 550;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.011em;
   color: var(--ink);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  text-wrap: balance;
 }
 .lead {
-  font-size: 17.5px;
-  line-height: 1.62;
-  color: var(--muted);
-  max-width: 52ch;
-  margin-bottom: 32px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 58ch;
 }
 .chips {
   display: flex;
@@ -403,12 +540,13 @@ ul {
   /* L'espace que laissait la rangée de boutons, désormais retirée. */
   margin-top: 34px;
 }
+/* Les pastilles du héros : contour fin sur fond de tuile. */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 13.5px;
-  color: var(--muted);
+  color: var(--ink-2);
   background: var(--surface);
   border: 1px solid var(--line);
   padding: 9px 15px;
@@ -420,9 +558,6 @@ ul {
   border-color: var(--accent);
   color: var(--ink);
   transform: translateY(-1px);
-}
-.chip:hover svg {
-  color: var(--accent);
 }
 .chip svg {
   color: var(--accent);
@@ -436,11 +571,11 @@ ul {
 }
 .portrait {
   position: relative;
-  width: min(360px, 80%);
+  width: min(360px, 82%);
   aspect-ratio: 4 / 5;
-  border-radius: 26px;
-  background: var(--grad-soft);
-  border: 1px solid #eadfff;
+  border-radius: 28px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow);
   display: grid;
   place-items: center;
@@ -450,11 +585,7 @@ ul {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 96px;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0.9;
+  color: var(--ink-3);
 }
 .portrait-img {
   width: 100%;
@@ -463,16 +594,18 @@ ul {
   object-position: center 20%;
   display: block;
 }
+/* Les deux badges : des capsules, comme les autres pastilles, à cheval sur le
+   bord de la photo, et qui flottent doucement. */
 .badge {
   position: absolute;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 12px 15px;
+  border-radius: 999px;
+  padding: 7px 17px 7px 7px;
   box-shadow: var(--shadow);
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
   font-size: 13.5px;
   font-weight: 500;
   /* Une étiquette tient sur une ligne : sans cette règle, « Portfolio à jour »
@@ -480,10 +613,10 @@ ul {
   white-space: nowrap;
 }
 .badge .ic {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  background: rgba(91, 75, 230, 0.1);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--mauve-doux);
   display: grid;
   place-items: center;
   color: var(--accent);
@@ -505,168 +638,151 @@ ul {
 
 /* ============================================================
    Services
-   Mêmes cartes que les projets — même fond, même bordure, même
+   Mêmes tuiles que les projets — même fond, même filet, même
    soulèvement au survol — pour que la page garde un seul vocabulaire.
    ============================================================ */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 20px;
 }
-.service-card {
+.service-card,
+.proj-card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 26px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.service-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-sm);
-  border-color: #ded9ec;
+/* Survol : soulèvement de 3 px et ombre douce. Seulement avec un vrai survol,
+   ici comme pour le halo : sur iPhone, une carte touchée resterait soulevée. */
+@media (hover: hover) {
+  .service-card:hover,
+  .proj-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--line-strong);
+  }
 }
-.service-title {
+.service-title,
+.proj-title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 20px;
-  letter-spacing: -0.01em;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: var(--tile-title-track);
 }
-.service-desc {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.6;
+.service-desc,
+.proj-desc {
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.55;
   /* Pousse le lien au bas de la carte : les cartes d'une même rangée alignent
      alors leur lien, quelle que soit la longueur du texte. */
   flex: 1;
 }
-.service-link {
-  font-size: 14px;
-  font-weight: 550;
-  color: var(--ink);
+.service-link,
+.proj-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--accent);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   align-self: flex-start;
 }
-.service-link:hover {
-  color: var(--accent);
+.service-link:hover,
+.proj-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ============================================================
-   Projects
+   Projets — grille « bento » : trois tuiles en tête, puis deux
+   rangées de deux. Sept cartes, plus de carte orpheline, et l'ordre
+   de lecture ne change pas.
    ============================================================ */
 .proj-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
 }
 .proj-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  grid-column: span 3;
 }
-.proj-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-sm);
-  border-color: #ded9ec;
-}
-.proj-title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 20px;
-  letter-spacing: -0.01em;
-}
-.proj-desc {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.6;
-  flex: 1;
+.proj-card:nth-child(-n + 3) {
+  grid-column: span 2;
 }
 .proj-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
 }
 .tag {
   font-size: 12.5px;
   font-weight: 500;
   color: var(--accent);
-  background: rgba(91, 75, 230, 0.08);
-  padding: 5px 11px;
-  border-radius: 8px;
+  background: var(--mauve-doux);
+  padding: 4px 11px;
+  border-radius: 999px;
 }
 .proj-links {
   display: flex;
   gap: 18px;
   margin-top: 4px;
 }
-.proj-link {
-  font-size: 14px;
-  font-weight: 550;
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.proj-link:hover {
-  color: var(--accent);
-}
 
 /* ============================================================
-   Skills
+   Compétences — une tuile par groupe, deux par rangée, dans l'ordre
+   des groupes. La grille aligne les rangées : plus de bord en dents
+   de scie.
    ============================================================ */
-/* Colonnes typographiques plutôt qu'une grille. Les groupes n'ont pas la même
-   hauteur, et une grille aligne chaque rangée sur son élément le plus grand :
-   un groupe d'un seul élément creusait donc un trou de la hauteur d'un groupe
-   de sept. Les colonnes se remplissent et s'équilibrent d'elles-mêmes.
-   `break-inside` empêche qu'un groupe soit coupé d'une colonne à l'autre. */
 .skills-grid {
-  columns: 3 280px;
-  column-gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
 }
 .skill-group {
-  break-inside: avoid;
-  margin-bottom: 30px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: border-color 0.2s ease;
+}
+@media (hover: hover) {
+  .skill-group:hover {
+    border-color: var(--line-strong);
+  }
+}
+/* En sombre, le fond alterné est plus clair que le fond : les tuiles montent
+   d'un cran pour rester détachées. */
+:root[data-theme='dark'] .section-alt .skill-group {
+  background: var(--surface-2);
 }
 .skill-group-label {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 17px;
+  letter-spacing: -0.022em;
   color: var(--ink);
   margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-.skill-group-label::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--grad);
-  flex: none;
 }
 .skill-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 9px;
+  gap: 8px;
 }
 .skill-chip {
   font-size: 13.5px;
   font-weight: 500;
   color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: 8px 14px;
-  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  padding: 6px 13px;
+  border-radius: 999px;
   transition: border-color 0.18s ease, transform 0.18s ease;
 }
 .skill-chip:hover {
@@ -680,14 +796,25 @@ ul {
 .parcours-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  gap: 64px;
+}
+/* La formation tient en quatre entrées à côté d'une longue frise d'expérience :
+   elle reste à l'écran pendant qu'on lit l'expérience, sans animation. */
+@media (min-width: 901px) {
+  .parcours-grid {
+    align-items: start;
+  }
+  .parcours-grid > div:last-child {
+    position: sticky;
+    top: 112px;
+  }
 }
 .col-title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 22px;
-  letter-spacing: -0.01em;
-  margin-bottom: 26px;
+  font-size: 24px;
+  letter-spacing: var(--tile-title-track);
+  margin-bottom: 28px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -697,21 +824,20 @@ ul {
 }
 .timeline {
   position: relative;
-  padding-left: 26px;
+  padding-left: 28px;
 }
 .timeline::before {
   content: '';
   position: absolute;
   left: 5px;
-  top: 6px;
-  bottom: 6px;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  opacity: 0.35;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--line-strong);
 }
 .tl-item {
   position: relative;
-  padding-bottom: 28px;
+  padding-bottom: 30px;
 }
 .tl-item:last-child {
   padding-bottom: 0;
@@ -719,72 +845,63 @@ ul {
 .tl-item::before {
   content: '';
   position: absolute;
-  left: -26px;
-  top: 5px;
-  width: 12px;
-  height: 12px;
+  left: -28px;
+  top: 6px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--accent);
+  background: var(--bg);
+  border: 1.5px solid var(--ink-3);
+}
+/* Le poste et le diplôme les plus récents portent un point plein. */
+.tl-item:first-child::before {
+  background: var(--accent);
+  border-color: var(--accent);
 }
 .tl-period {
   font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--ink-2);
   margin-bottom: 5px;
 }
 .tl-role {
   font-weight: 600;
-  font-size: 16.5px;
+  font-size: 17px;
+  letter-spacing: -0.022em;
 }
 .tl-org {
-  font-size: 14.5px;
-  color: var(--muted);
+  font-size: 15px;
+  color: var(--ink-2);
   margin-bottom: 6px;
 }
 .tl-desc {
-  font-size: 14.5px;
-  color: var(--muted);
+  font-size: 15px;
+  color: var(--ink-2);
   line-height: 1.55;
 }
 
 /* ============================================================
-   Tutoring band
+   Bande tutorat — une grande tuile sombre, dans les deux thèmes.
+   Ni dégradé ni halo fixe : un aplat, et un filet net sur le bord haut.
    ============================================================ */
+/* La bande développe la tuile « Tutorat » des services (« Voir le détail ») :
+   elle la suit de près plutôt que d'en être séparée par deux marges. */
+#tutorat.section {
+  padding-top: 0;
+}
 .tutoring {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #17151f 0%, #2a2140 100%);
-  color: #fff;
-  padding: 56px;
+  background: var(--band-bg);
+  border: 1px solid var(--band-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: var(--band-ink);
+  padding: 64px;
   /* Une seule colonne : l'introduction, l'offre et les témoignages occupent
      toute la largeur, et les deux boutons ferment la bande. */
-}
-.tutoring::after {
-  content: '';
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  /* Le flou est dessiné dans le dégradé lui-même, sans `filter: blur()` :
-     un élément filtré échappe au coin arrondi de son parent — le navigateur
-     le rogne en rectangle, ce qui faisait dépasser une pointe claire en haut
-     à droite de la bande. */
-  background: radial-gradient(
-    circle,
-    rgba(155, 93, 229, 0.34) 0%,
-    rgba(155, 93, 229, 0.2) 35%,
-    rgba(155, 93, 229, 0.07) 58%,
-    transparent 75%
-  );
-  /* Repoussé vers le coin et adouci : son centre tombait exactement là où se
-     pose maintenant le filigrane grec, qui s'y serait noyé. */
-  top: -220px;
-  right: -160px;
-  pointer-events: none;
 }
 .tutoring-grec {
   position: absolute;
@@ -793,25 +910,27 @@ ul {
   font-family: var(--font-serif);
   font-size: clamp(32px, 8vw, 104px);
   line-height: 1;
-  color: rgba(214, 200, 255, 0.2);
+  color: var(--band-grec);
   pointer-events: none;
-  user-select: none;
+  /* Le préfixe seul : Safari ne connaît que lui, et la compilation le retire
+     quand la forme sans préfixe est là aussi. */
+  -webkit-user-select: none;
 }
 .tutoring .eyebrow {
-  color: #c6b4ff;
+  color: var(--band-accent);
 }
 .tutoring-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: clamp(28px, 3.5vw, 38px);
-  line-height: 1.1;
-  margin-bottom: 14px;
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-track);
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.08;
+  margin-bottom: 18px;
   position: relative;
 }
 .tutoring-desc {
-  font-size: 16.5px;
-  color: rgba(255, 255, 255, 0.72);
+  font-size: 17px;
+  color: var(--band-ink-2);
   line-height: 1.6;
   /* Large, mais pas jusqu'au bord : au-delà, une ligne devient pénible à lire.
      Même mesure que l'introduction des témoignages. */
@@ -826,10 +945,10 @@ ul {
    Une ligne par niveau, à l'intérieur de la bande sombre.
    ------------------------------------------------------------ */
 .catalogue {
-  position: relative; /* au-dessus du halo, peint après le contenu */
-  margin-top: 44px;
+  position: relative;
+  margin-top: 48px;
   padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid var(--band-line);
 }
 .cat-titre {
   margin-bottom: 8px;
@@ -841,15 +960,15 @@ ul {
   /* `start` et non `stretch` : un niveau sans cours ne doit pas s'étirer à la
      hauteur de son voisin et laisser un grand vide. */
   align-items: start;
-  padding: 14px 0;
+  padding: 16px 0;
 }
 .cat-ligne + .cat-ligne {
-  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  border-top: 1px solid var(--band-line);
 }
 .cat-niveau {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--band-ink-3);
   padding-top: 7px;
 }
 .cat-matieres {
@@ -863,26 +982,24 @@ ul {
   gap: 7px;
   font-size: 13.5px;
   font-weight: 500;
-  color: #fff;
+  color: var(--band-ink);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
   padding: 7px 13px 7px 11px;
   border-radius: 100px;
   /* Même effet de survol que les pastilles de compétences : la bordure prend
-     la couleur d'accent et la pastille se soulève d'un pixel. Sur la bande
-     sombre, l'accent est le lavande clair — le violet du thème clair y serait
-     invisible. */
+     la couleur claire de la bande et la pastille se soulève d'un pixel. */
   transition: border-color 0.18s ease, transform 0.18s ease;
 }
 .cat-matiere:hover {
-  border-color: #c6b4ff;
+  border-color: var(--band-accent);
   transform: translateY(-1px);
 }
 .cat-icone {
   width: 15px;
   height: 15px;
   flex: none;
-  color: #c6b4ff;
+  color: var(--band-accent);
 }
 .cat-plus {
   margin-top: 12px;
@@ -893,7 +1010,7 @@ ul {
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 550;
-  color: #c6b4ff;
+  color: var(--band-accent);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -903,6 +1020,9 @@ ul {
 }
 .cat-plus:hover .arrow {
   transform: translateX(3px);
+}
+.cat-plus .arrow {
+  transition: transform 0.2s ease;
 }
 .cat-plus.est-ouvert .arrow {
   transform: rotate(90deg);
@@ -919,45 +1039,43 @@ ul {
 .cat-cours-ligne {
   font-size: 13.5px;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--band-ink-3);
 }
 .cat-cours-matiere {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--band-ink);
   font-weight: 550;
 }
 .cat-note {
   margin-top: 20px;
   padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.09);
-  font-size: 13.5px;
+  border-top: 1px solid var(--band-line);
+  font-size: 14px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.58);
+  color: var(--band-ink-3);
   max-width: 62ch;
 }
-/* Les deux boutons ferment la bande, sous les témoignages. En ligne plutôt
-   qu'empilés : à pleine largeur, une colonne étroite laisserait un grand vide
-   à sa droite — c'est précisément ce qu'on vient de corriger. */
+/* Les deux boutons ferment la bande, sous les témoignages. */
 .tutoring-cta {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 44px;
+  margin-top: 48px;
   padding-top: 36px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid var(--band-line);
 }
 .tutoring-note {
   /* Toujours sur sa propre ligne, sous les deux boutons. */
   flex-basis: 100%;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--band-ink-3);
 }
 /* Le .btn-ghost standard est prévu pour un fond clair (texte foncé) :
    illisible sur la bande sombre. Variante posée pour toute la bande —
    « Laisser un avis » comme « Voir plus ». */
 .tutoring .btn-ghost {
-  color: #fff;
+  color: var(--band-ink);
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.28);
 }
@@ -968,65 +1086,70 @@ ul {
 
 /* ============================================================
    Avis (témoignages) — lus dans la base commune avec aeeureka.
-   Ce bloc vit À L'INTÉRIEUR de la bande sombre `.tutoring` : ses couleurs
-   sont donc claires sur fond sombre, dans les deux thèmes du site.
+   Ce bloc vit À L'INTÉRIEUR de la bande sombre `.tutoring`.
    ============================================================ */
 .avis {
-  /* Au-dessus du halo violet, qui est peint après le contenu. */
   position: relative;
-  margin-top: 44px;
+  margin-top: 48px;
   padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid var(--band-line);
 }
 .avis-title,
 .cat-titre {
   font-family: var(--font-display);
-  font-weight: 650;
+  font-weight: 600;
   font-size: clamp(22px, 2.6vw, 28px);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.007em;
 }
 .avis-intro {
-  font-size: 15.5px;
-  color: rgba(255, 255, 255, 0.72);
+  font-size: 16px;
+  color: var(--band-ink-2);
   line-height: 1.6;
   margin-top: 10px;
   max-width: 62ch;
 }
+/* 20 px entre deux rangées de cartes ; à l'intérieur d'une carte, la
+   sous-grille impose son propre écart de 14 px. */
 .avis-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 20px;
   margin-top: 28px;
 }
+/* Sous-grille : la citation, la fiche et le lien partagent les mêmes rangées
+   d'une carte à l'autre, donc filets et noms s'alignent (Safari 16 et plus). */
 .avis-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--band-surface);
+  border: 1px solid var(--band-line);
   border-radius: var(--radius);
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  padding: 28px;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 14px;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
-/* `hidden` seul ne suffit pas face à `display: flex` — sans cette règle, les
+/* `hidden` seul ne suffit pas face à `display: grid` — sans cette règle, les
    cartes repliées resteraient visibles. */
 .avis-card[hidden] {
   display: none;
 }
-.avis-card:hover {
-  transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.32);
+@media (hover: hover) {
+  .avis-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
 }
 .avis-quote {
-  font-size: 15.5px;
-  line-height: 1.65;
+  font-size: 16px;
+  line-height: 1.62;
   white-space: pre-line;
-  flex: 1;
 }
 /* Placé en bas de la carte, après le bloc d'identité — comme sur aeeureka. */
 .avis-more {
-  align-self: flex-start;
+  justify-self: start;
+  align-self: end;
   margin-top: 2px;
   background: none;
   border: none;
@@ -1035,7 +1158,7 @@ ul {
   font-family: var(--font-body);
   font-size: 14.5px;
   font-weight: 550;
-  color: #c6b4ff;
+  color: var(--band-accent);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1048,7 +1171,7 @@ ul {
   flex-direction: column;
   gap: 8px;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid var(--band-line);
 }
 .avis-nom {
   font-weight: 600;
@@ -1058,14 +1181,14 @@ ul {
    Sur la carte (fond sombre), elle est reprise juste en dessous. */
 .avis-detail {
   font-size: 13.5px;
-  color: var(--muted);
+  color: var(--ink-2);
 }
 .avis-meta .avis-detail {
-  color: rgba(255, 255, 255, 0.58);
+  color: var(--band-ink-3);
 }
 .avis-matieres {
   font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--band-ink-2);
 }
 .avis-plus {
   display: flex;
@@ -1090,7 +1213,7 @@ ul {
   margin: auto;
 }
 .avis-dialog::backdrop {
-  background: rgba(16, 14, 23, 0.55);
+  background: rgba(8, 8, 10, 0.55);
 }
 .avis-dialog-inner {
   position: relative;
@@ -1098,9 +1221,13 @@ ul {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
-  padding: 36px;
+  padding: 40px;
   max-height: min(80vh, 760px);
   overflow-y: auto;
+}
+/* Elle reçoit le focus à l'ouverture : pas d'anneau autour de toute la fenêtre. */
+.avis-dialog-inner:focus {
+  outline: none;
 }
 .avis-close {
   position: absolute;
@@ -1114,7 +1241,7 @@ ul {
   border-radius: 10px;
   border: 1px solid var(--line);
   background: var(--surface-2);
-  color: var(--muted);
+  color: var(--ink-2);
   cursor: pointer;
   transition: color 0.18s ease, border-color 0.18s ease;
 }
@@ -1124,8 +1251,9 @@ ul {
 }
 .avis-dialog-nom {
   font-family: var(--font-display);
-  font-weight: 650;
-  font-size: 21px;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: var(--tile-title-track);
   padding-right: 44px;
 }
 .avis-dialog .avis-detail {
@@ -1136,7 +1264,7 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  font-size: 15.5px;
+  font-size: 16px;
   line-height: 1.7;
   white-space: pre-line;
 }
@@ -1145,14 +1273,14 @@ ul {
   padding-top: 16px;
   border-top: 1px solid var(--line);
   font-size: 13px;
-  color: var(--muted);
+  color: var(--ink-2);
 }
 
 /* ============================================================
    Maxime — la respiration avant le pied de page
    ============================================================ */
 .maxime-band {
-  padding: 88px 0 100px;
+  padding: 96px 0 108px;
 }
 /* Méandre grec — motif de 12 × 15 px répété à l'horizontale. Repris tel quel
    de la page « À propos » d'aeeureka, couleurs et dégradé compris, pour que le
@@ -1187,10 +1315,11 @@ ul {
 }
 .maxime-texte {
   font-family: var(--font-serif);
-  font-size: clamp(22px, 3.2vw, 30px);
-  line-height: 1.38;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.35;
   letter-spacing: -0.02em;
   color: var(--ink);
+  text-wrap: balance;
 }
 .maxime-sig {
   display: flex;
@@ -1206,13 +1335,48 @@ ul {
   color: var(--accent);
 }
 .maxime-source {
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--ink-2);
+}
+/* Au défilement, le méandre se déroule depuis le centre et le laurier se trace,
+   en CSS seul (animations liées au défilement). Navigateurs sans cette
+   fonction, ou animations réduites : les ornements restent tels quels. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Propriétés détaillées, pas le raccourci `animation` : la compilation le
+       fusionnerait avec animation-timeline en une forme que Safari rejette. */
+    .meandre {
+      animation-name: derouler;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+    .maxime-laurier {
+      view-timeline-name: --laurier;
+    }
+    .maxime-laurier path {
+      stroke-dasharray: 400;
+      animation-name: tracer;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --laurier;
+      animation-range: entry 20% cover 50%;
+    }
+  }
+}
+@keyframes derouler {
+  from { clip-path: inset(0 50% 0 50%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes tracer {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
 }
 
 /* ============================================================
-   Footer
+   Pied de page
    ============================================================ */
 .site-footer {
   border-top: 1px solid var(--line);
@@ -1232,7 +1396,7 @@ ul {
 }
 .footer-link {
   font-size: 14.5px;
-  color: var(--muted);
+  color: var(--ink-2);
   transition: color 0.18s ease;
 }
 .footer-link:hover {
@@ -1240,11 +1404,27 @@ ul {
 }
 .footer-copy {
   font-size: 13.5px;
-  color: var(--muted);
+  color: var(--ink-2);
 }
 
 /* ============================================================
-   Entrance animations
+   Bascule clair/sombre : le nouveau thème s'ouvre en cercle depuis
+   le bouton (View Transitions). Sans support, la bascule reste
+   instantanée.
+   ============================================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+:root.bascule-theme *,
+:root.bascule-theme *::before,
+:root.bascule-theme *::after {
+  transition: none !important;
+}
+
+/* ============================================================
+   Animations d'entrée
    ============================================================ */
 .reveal {
   opacity: 0;
@@ -1314,28 +1494,73 @@ html.js-anim .reveal-in {
   }
 }
 
+/* Transparence réduite (réglage du système) : la barre devient opaque. */
+@media (prefers-reduced-transparency: reduce) {
+  .site-nav {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--bg);
+  }
+}
+
 /* ============================================================
    Responsive
    ============================================================ */
+/* Le badge se rapproche de la photo pour rester entier à l'écran. */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .badge-2 {
+    right: -5%;
+  }
+}
+/* Juste au-dessus de la disposition téléphone, le nom tient sur une ligne. */
+@media (min-width: 901px) and (max-width: 960px) {
+  .nav-link {
+    padding-inline: 10px;
+  }
+}
+@media (max-width: 1000px) {
+  .proj-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .proj-card,
+  .proj-card:nth-child(-n + 3) {
+    grid-column: span 1;
+  }
+  /* Sept cartes sur deux colonnes : la première prend toute la largeur. */
+  .proj-card:first-child {
+    grid-column: 1 / -1;
+  }
+}
 @media (max-width: 900px) {
+  :root {
+    --section-pad: 88px;
+  }
   .hero {
     grid-template-columns: 1fr;
     gap: 12px;
-    padding: 48px 0 72px;
+    padding-block: 40px 64px;
   }
+  /* Le conteneur prend la largeur de la photo : les badges, à cheval sur son
+     bord, restent dans l'écran (ils sortaient de l'écran sur iPad). */
   .visual {
     order: -1;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
+    width: min(300px, 76%);
+    justify-self: center;
   }
   .portrait {
-    width: min(260px, 66%);
+    width: 100%;
   }
   .parcours-grid {
     grid-template-columns: 1fr;
-    gap: 44px;
+    gap: 48px;
   }
   .tutoring {
-    padding: 40px;
+    padding: 44px;
+  }
+  /* La bande n'a pas de marge haute : elle s'arrête sous la barre dépliée. */
+  #tutorat {
+    scroll-margin-top: 28px;
   }
   /* Le niveau passe au-dessus de ses matières plutôt qu'à leur gauche. */
   .cat-ligne {
@@ -1348,24 +1573,140 @@ html.js-anim .reveal-in {
   .nav-links {
     display: none;
   }
+  /* Sur téléphone, les sections passent dans la barre du haut, sur une
+     seconde ligne : une seule barre. En lisant vers le bas, la première
+     ligne glisse hors de l'écran et il ne reste que la rangée ; elle revient
+     dès qu'on remonte. */
+  .nav-rangee {
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* 6 px en haut : la place de l'anneau de focus du clavier. */
+    padding: 6px 14px 10px;
+    margin-top: -12px;
+  }
+  .nav-rangee::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-rangee a {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 7px 6px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--nav-lien);
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .nav-rangee a.est-actif {
+    color: var(--ink);
+    background: var(--mauve-doux);
+  }
+  .site-nav.est-compacte {
+    transform: translateY(calc(14px - var(--ligne1, 80px)));
+  }
+  /* L'ombre du monogramme dépasserait de la ligne qui reste cachée. */
+  .site-nav.est-compacte .mark {
+    box-shadow: none;
+  }
+}
+@media (max-width: 700px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .proj-grid {
+    grid-template-columns: 1fr;
+  }
+  .proj-card:first-child {
+    grid-column: auto;
+  }
 }
 @media (max-width: 560px) {
-  .wrap {
-    padding: 0 20px;
+  :root {
+    --section-pad: 72px;
   }
-  .section {
-    padding: 72px 0;
+  .wrap {
+    padding-inline: 20px;
+  }
+  .site-nav .nav-inner {
+    padding-block: 14px;
+  }
+  .service-card,
+  .proj-card {
+    padding: 26px;
   }
   .tutoring {
-    padding: 32px 24px;
+    padding: 32px 26px;
+    border-radius: 26px;
   }
   .avis-dialog-inner {
     padding: 28px 22px;
   }
-  .badge-1 { left: 0; }
-  .badge-2 { right: 0; }
+  /* En colonne, tout se centre : le nom, les liens et le droit d'auteur. */
   .footer-inner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+  }
+  .footer-links {
+    justify-content: center;
+  }
+  /* Sur téléphone, le nom, le bouton de thème et « Me contacter » doivent
+     tenir sans déborder : on resserre, on ne retire rien. Sous 400 px, le nom
+     passe sur deux lignes. */
+  .brand {
+    font-size: 15.5px;
+    line-height: 1.2;
+    gap: 9px;
+    min-width: 0;
+  }
+  .nav-actions {
+    gap: 8px;
+  }
+  .nav-cta {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+/* Très petits téléphones : la barre se resserre encore pour tout garder, nom
+   compris (à 320 px, il passait sous le bouton de thème et « Parcours » était coupé). */
+@media (max-width: 374px) {
+  .site-nav .nav-inner {
+    column-gap: 8px;
+  }
+  .site-nav .brand {
+    font-size: 14px;
+    gap: 7px;
+  }
+  .site-nav .mark {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+  .nav-actions {
+    gap: 6px;
+  }
+  .nav-cta {
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 13px;
+  }
+  .nav-rangee {
+    padding-inline: 6px;
+    gap: 0;
+  }
+  .nav-rangee a {
+    padding-inline: 4px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 359px) {
+  /* « Lire la lettre complète » reste sur une ligne. */
+  .avis-card {
+    padding: 22px;
   }
 }

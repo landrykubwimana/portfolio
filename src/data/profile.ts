@@ -20,6 +20,7 @@
  * rien — le fichier est réécrit à chaque génération.
  */
 import { tagline, experience, education, skills } from "./parcours.genere";
+import { typoProfonde } from "../lib/typo";
 
 export interface SocialLinks {
   github?: string;
@@ -134,14 +135,18 @@ export interface Profile {
   maxim: Maxim;
 }
 
-export const profile: Profile = {
+// Les textes s'écrivent ici au clavier : typoProfonde pose la typographie
+// française pour l'affichage (voir lib/typo.ts).
+export const profile: Profile = typoProfonde({
   name: 'Landry Kubwimana',
   initials: 'LK',
   photo: '/photo.jpg', // vide ('') → repli sur les initiales « LK »
   role: 'Scientifique de données, M. Sc. | Tuteur',
   tagline,
   location: 'Montréal, QC',
-  available: true,
+  // Masquée à la demande de Landry (refonte du 8 novembre 2026). Le libellé
+  // reste ci-dessous : repasser à true suffit pour la réafficher.
+  available: false,
   availableLabel: 'Disponible pour du tutorat',
 
   social: {
@@ -289,4 +294,4 @@ export const profile: Profile = {
     // La vider ('') pour n'afficher que le nom.
     source: 'maxime transmise par la tradition pythagoricienne',
   },
-};
+});

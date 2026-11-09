@@ -31,7 +31,7 @@ Les principes qui ont guidé la conception :
 | Framework | **Astro** (statique, sauf la page d'accueil) | Rapide, léger, idéal pour un site de contenu |
 | Langage | **TypeScript** | Contenu structuré et typé |
 | Styles | **CSS** avec *design tokens* | Système de design cohérent, sans dépendance lourde |
-| Polices | **@fontsource** (Space Grotesk + Inter) | **Auto-hébergées** — aucune requête vers un CDN externe |
+| Polices | **Police du système** (SF Pro sur Apple) + **@fontsource** (Inter ailleurs) | Rien à télécharger sur Apple ; Inter **auto-hébergée** ailleurs — aucune requête vers un CDN externe |
 | Données | **Supabase**, en lecture seule | Base commune avec aeeureka.com : les avis restent synchronisés |
 | Versioning | **Git + GitHub** | Historique, sauvegarde |
 | Hébergement | **Vercel** (+ `@astrojs/vercel`) | Build et mise en ligne automatiques à chaque push |
@@ -46,6 +46,7 @@ src/
 ├── lib/supabase.ts        # LA connexion à la base (un seul endroit)
 ├── lib/avis.ts            # lecture des avis + libellés des cartes
 ├── lib/catalogue.ts       # lecture de l'offre par niveau
+├── lib/typo.ts            # typographie française, posée à l'affichage
 ├── styles/global.css      # système de design (tokens, composants)
 ├── layouts/Base.astro     # coquille HTML, polices, métadonnées SEO
 ├── components/             # sections de la page

@@ -1,5 +1,15 @@
 ---
 import { profile } from '../data/profile';
+
+/* Les cinq sections, dans l'ordre de la page : une seule liste pour le menu
+   d'ordinateur et pour la rangée du téléphone. */
+const sections = [
+  { href: '#services', label: 'Services' },
+  { href: '#tutorat', label: 'Tutorat' },
+  { href: '#projets', label: 'Projets' },
+  { href: '#competences', label: 'Compétences' },
+  { href: '#parcours', label: 'Parcours' },
+];
 ---
 
 <header class="site-nav">
@@ -9,11 +19,8 @@ import { profile } from '../data/profile';
       {profile.name}
     </a>
     <nav class="nav-links">
-      <a class="nav-link" href="#services">Services</a>
-      <a class="nav-link" href="#tutorat">Tutorat</a>
-      <a class="nav-link" href="#projets">Projets</a>
-      <a class="nav-link" href="#competences">Compétences</a>
-      <a class="nav-link" href="#parcours">Parcours</a>
+      <span class="nav-pastille" aria-hidden="true"></span>
+      {sections.map((s) => <a class="nav-link" href={s.href}>{s.label}</a>)}
     </nav>
     <div class="nav-actions">
       <button
@@ -28,4 +35,11 @@ import { profile } from '../data/profile';
       <a class="btn btn-primary nav-cta" href="#contact">Me contacter</a>
     </div>
   </div>
+
+  {/* Sur téléphone, les sections sur une seconde ligne de la même barre. En
+      lisant vers le bas, la première ligne s'efface et seule cette rangée
+      reste ; elle revient dès qu'on remonte. */}
+  <nav class="nav-rangee" aria-label="Navigation principale">
+    {sections.map((s) => <a href={s.href} data-onglet={s.href.slice(1)}>{s.label}</a>)}
+  </nav>
 </header>

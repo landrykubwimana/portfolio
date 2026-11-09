@@ -16,9 +16,10 @@
  */
 import { profile } from '../data/profile';
 import { getCatalogue } from '../lib/catalogue';
+import { typoProfonde } from '../lib/typo';
 import IconeMatiere from './IconeMatiere.astro';
 
-const niveaux = await getCatalogue();
+const niveaux = typoProfonde(await getCatalogue());
 ---
 
 {
@@ -58,7 +59,7 @@ const niveaux = await getCatalogue();
                     .map((m) => (
                       <p class="cat-cours-ligne">
                         <span class="cat-cours-matiere">{m.nom}</span>
-                        {' : '}
+                        {' : '}
                         {m.cours.join(', ')}
                       </p>
                     ))}

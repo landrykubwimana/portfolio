@@ -1,5 +1,4 @@
 ---
-import '@fontsource-variable/space-grotesk';
 import '@fontsource-variable/inter';
 import '../styles/global.css';
 import { profile } from '../data/profile';
@@ -52,16 +51,202 @@ const {
   <body>
     <slot />
     <script is:inline>
-      // Bascule clair/sombre au clic + mémorisation du choix.
+      // Bascule clair/sombre au clic + mémorisation du choix. Là où le
+      // navigateur sait faire (View Transitions), le nouveau thème s'ouvre en
+      // cercle depuis le bouton ; ailleurs, ou si les animations sont
+      // réduites, la bascule reste instantanée.
       (function () {
         var btn = document.querySelector('.theme-toggle');
         if (!btn) return;
+        var root = document.documentElement;
+        var enCours = null;
         btn.addEventListener('click', function () {
-          var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-          document.documentElement.dataset.theme = next;
-          try {
-            localStorage.setItem('theme', next);
-          } catch (e) {}
+          var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          function appliquer() {
+            root.dataset.theme = next;
+            try {
+              localStorage.setItem('theme', next);
+            } catch (e) {}
+          }
+          var reduit = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!document.startViewTransition || reduit) {
+            appliquer();
+            return;
+          }
+          var r = btn.getBoundingClientRect();
+          var x = r.left + r.width / 2;
+          var y = r.top + r.height / 2;
+          var rayon = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+          // Pendant la bascule, les transitions de couleur sont coupées : le
+          // cercle montre d'emblée le nouveau thème, pas une page grise.
+          root.classList.add('bascule-theme');
+          var transition = document.startViewTransition(appliquer);
+          enCours = transition;
+          transition.finished.finally(function () {
+            // Un second appui abandonne la bascule en cours : la dernière seule conclut.
+            if (enCours === transition) root.classList.remove('bascule-theme');
+          });
+          transition.ready.then(
+            function () {
+              root.animate(
+                { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + rayon + 'px at ' + x + 'px ' + y + 'px)'] },
+                { duration: 560, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
+              );
+            },
+            function () {} // Deux appuis rapprochés : la première bascule est abandonnée, sans erreur.
+          );
+        });
+      })();
+    </script>
+    <script is:inline>
+      // Halo qui suit la souris sur les cartes : le filet et la lueur intérieure
+      // se placent sous le curseur. Seulement avec une souris (rien sur écran
+      // tactile) ; un seul écouteur pour toute la page.
+      (function () {
+        if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+        var cibles = '.service-card, .proj-card, .avis-card, .skill-group';
+        var dernier = null;
+        var attente = 0;
+        document.addEventListener(
+          'pointermove',
+          function (e) {
+            dernier = e;
+            if (attente) return;
+            attente = requestAnimationFrame(function () {
+              attente = 0;
+              var el = dernier.target && dernier.target.closest ? dernier.target.closest(cibles) : null;
+              if (!el) return;
+              var r = el.getBoundingClientRect();
+              el.style.setProperty('--mx', dernier.clientX - r.left + 'px');
+              el.style.setProperty('--my', dernier.clientY - r.top + 'px');
+            });
+          },
+          { passive: true }
+        );
+      })();
+    </script>
+    <script is:inline>
+      // Pastille de la barre : elle glisse sous le lien de la section la plus
+      // présente à l'écran, et le lien est annoncé aux lecteurs d'écran.
+      (function () {
+        var nav = document.querySelector('.nav-links');
+        var pastille = nav && nav.querySelector('.nav-pastille');
+        if (!pastille || !('IntersectionObserver' in window)) return;
+        var liens = Array.prototype.slice.call(nav.querySelectorAll('.nav-link'));
+        var courant = null;
+        function placer() {
+          liens.forEach(function (l) {
+            var actif = l === courant;
+            l.classList.toggle('est-actif', actif);
+            if (actif) l.setAttribute('aria-current', 'location');
+            else l.removeAttribute('aria-current');
+          });
+          if (!courant) {
+            pastille.classList.remove('est-visible');
+            return;
+          }
+          pastille.style.setProperty('--x', courant.offsetLeft + 'px');
+          pastille.style.setProperty('--w', courant.offsetWidth + 'px');
+          pastille.classList.add('est-visible');
+        }
+        var presentes = {};
+        var io = new IntersectionObserver(
+          function (entrees) {
+            entrees.forEach(function (e) {
+              presentes[e.target.id] = e.isIntersecting;
+            });
+            courant = null;
+            liens.forEach(function (l) {
+              if (!courant && presentes[l.getAttribute('href').slice(1)]) courant = l;
+            });
+            placer();
+          },
+          { rootMargin: '-45% 0px -50% 0px' }
+        );
+        liens.forEach(function (l) {
+          var s = document.getElementById(l.getAttribute('href').slice(1));
+          if (s) io.observe(s);
+        });
+        window.addEventListener('resize', placer);
+      })();
+    </script>
+    <script is:inline>
+      // Rangée des sections, sur téléphone : la section en cours est marquée,
+      // et la première ligne de la barre glisse hors de l'écran quand on lit
+      // vers le bas ; elle revient dès qu'on remonte.
+      (function () {
+        var barre = document.querySelector('.site-nav');
+        if (!barre) return;
+        var ligne1 = barre.querySelector('.nav-inner');
+        var telephone = window.matchMedia('(max-width: 900px)');
+
+        var liens = barre.querySelectorAll('.nav-rangee [data-onglet]');
+        if (liens.length && 'IntersectionObserver' in window) {
+          var presentes = {};
+          var io = new IntersectionObserver(
+            function (entrees) {
+              entrees.forEach(function (e) {
+                presentes[e.target.id] = e.isIntersecting;
+              });
+              var courant = null;
+              liens.forEach(function (a) {
+                if (!courant && presentes[a.dataset.onglet]) courant = a;
+              });
+              liens.forEach(function (a) {
+                var actif = a === courant;
+                a.classList.toggle('est-actif', actif);
+                if (actif) a.setAttribute('aria-current', 'location');
+                else a.removeAttribute('aria-current');
+              });
+            },
+            { rootMargin: '-45% 0px -50% 0px' }
+          );
+          liens.forEach(function (a) {
+            var s = document.getElementById(a.dataset.onglet);
+            if (s) io.observe(s);
+          });
+        }
+
+        // Le déplacement se mesure depuis le dernier changement de sens, pas
+        // d'un événement à l'autre : un défilement lent finit aussi par compter.
+        var ancre = window.scrollY;
+        function mesurer() {
+          barre.style.setProperty('--ligne1', ligne1.offsetHeight + 'px');
+        }
+        function defiler() {
+          // Plafonné au bas de la page : le rebond de Safari n'est pas une remontée.
+          var y = Math.min(window.scrollY, document.documentElement.scrollHeight - window.innerHeight);
+          var compacte = barre.classList.contains('est-compacte');
+          if (!telephone.matches || y < 160) {
+            barre.classList.remove('est-compacte');
+            ancre = y;
+          } else if (compacte ? y > ancre : y < ancre) {
+            ancre = y;
+          } else if (Math.abs(y - ancre) > 12) {
+            barre.classList.toggle('est-compacte', y > ancre);
+            ancre = y;
+          }
+        }
+        mesurer();
+        window.addEventListener('resize', mesurer);
+        window.addEventListener('scroll', defiler, { passive: true });
+
+        // Au clavier seulement (à la souris, Chrome donne aussi le focus, et le
+        // lien bougerait sous le pointeur) : la barre se déplie d'un coup quand un
+        // de ses éléments reçoit le focus, sinon Safari fait remonter la page.
+        barre.addEventListener('focusin', function (e) {
+          if (!e.target.matches(':focus-visible')) return;
+          var page = document.documentElement;
+          barre.style.transition = 'none';
+          barre.classList.remove('est-compacte');
+          page.style.scrollPaddingTop = '0px';
+          void barre.offsetHeight;
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              barre.style.transition = '';
+              page.style.scrollPaddingTop = '';
+            });
+          });
         });
       })();
     </script>
@@ -91,13 +276,16 @@ const {
         var io = new IntersectionObserver(
           function (entries) {
             entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
+              if (!entry.isIntersecting) return;
+              // Un élément plus haut que l'écran (la bande tutorat sur téléphone)
+              // peut ne jamais montrer 12 % de sa surface : il apparaît dès qu'il entre.
+              if (entry.intersectionRatio >= 0.12 || entry.boundingClientRect.height > window.innerHeight * 0.9) {
                 entry.target.classList.add('reveal-in');
                 io.unobserve(entry.target);
               }
             });
           },
-          { rootMargin: '0px 0px -10% 0px', threshold: 0.12 }
+          { rootMargin: '0px 0px -10% 0px', threshold: [0, 0.12] }
         );
         els.forEach(function (el) {
           io.observe(el);
